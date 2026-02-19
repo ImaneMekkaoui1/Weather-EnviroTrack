@@ -1,0 +1,948 @@
+2026-02-19T21:07:57.544Z  INFO 18980 --- [demo] [main] com.backend.demo.DemoApplication         : Starting DemoApplication using Java 21.0.1 with PID 18980 (C:\Users\Lenovo\Desktop\les versions pfe\last version 2\test\Before last 4\ttt\backend\target\classes started by Lenovo in C:\Users\Lenovo\Desktop\les versions pfe\last version 2\test\Before last 4\ttt\backend)
+2026-02-19T21:07:57.592Z DEBUG 18980 --- [demo] [main] com.backend.demo.DemoApplication         : Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-02-19T21:07:57.596Z  INFO 18980 --- [demo] [main] com.backend.demo.DemoApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-02-19T21:08:01.391Z  INFO 18980 --- [demo] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-19T21:08:02.014Z  INFO 18980 --- [demo] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 598 ms. Found 9 JPA repository interfaces.
+2026-02-19T21:08:02.403Z  INFO 18980 --- [demo] [main] faultConfiguringBeanFactoryPostProcessor : No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2026-02-19T21:08:02.428Z  INFO 18980 --- [demo] [main] faultConfiguringBeanFactoryPostProcessor : No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2026-02-19T21:08:04.368Z  INFO 18980 --- [demo] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8082 (http)
+2026-02-19T21:08:04.401Z  INFO 18980 --- [demo] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-19T21:08:04.404Z  INFO 18980 --- [demo] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-02-19T21:08:04.573Z  INFO 18980 --- [demo] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-02-19T21:08:04.577Z  INFO 18980 --- [demo] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6812 ms
+2026-02-19T21:08:04.919Z  INFO 18980 --- [demo] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-19T21:08:05.093Z  INFO 18980 --- [demo] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-02-19T21:08:05.185Z  INFO 18980 --- [demo] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-02-19T21:08:05.759Z  INFO 18980 --- [demo] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-19T21:08:05.846Z  INFO 18980 --- [demo] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-02-19T21:08:06.132Z  INFO 18980 --- [demo] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@402f61f5
+2026-02-19T21:08:06.136Z  INFO 18980 --- [demo] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-02-19T21:08:06.216Z  WARN 18980 --- [demo] [main] org.hibernate.orm.deprecation            : HHH90000025: MariaDBDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-19T21:08:09.708Z  INFO 18980 --- [demo] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-19T21:08:10.104Z  INFO 18980 --- [demo] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-19T21:08:10.838Z  INFO 18980 --- [demo] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-19T21:08:12.934Z DEBUG 18980 --- [demo] [main] c.b.d.security.JwtAuthenticationFilter   : Filter 'jwtAuthenticationFilter' configured for use
+2026-02-19T21:08:13.238Z DEBUG 18980 --- [demo] [main] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        alert_threshold at1_0
+2026-02-19T21:08:15.332Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Connexion établie au broker MQTT: tcp://localhost:1883
+2026-02-19T21:08:15.339Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Abonné au topic: capteurs/qualite_air
+2026-02-19T21:08:15.869Z  INFO 18980 --- [demo] [main] c.b.demo.simulation.SensorSimulator      : Initializing Sensor Simulator with broker: tcp://localhost:1883, topic: capteurs/qualite_air
+2026-02-19T21:08:16.191Z  INFO 18980 --- [demo] [main] c.b.demo.simulation.SensorSimulator      : Connected to MQTT broker: tcp://localhost:1883
+2026-02-19T21:08:16.562Z  WARN 18980 --- [demo] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-19T21:08:17.084Z DEBUG 18980 --- [demo] [main] o.s.w.s.s.s.WebSocketHandlerMapping      : Patterns [/ws-mqtt/**, /ws-notifications/**, /api/ws-notifications/**] in 'stompWebSocketHandlerMapping'
+2026-02-19T21:08:17.431Z DEBUG 18980 --- [demo] [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 82 mappings in 'requestMappingHandlerMapping'
+2026-02-19T21:08:17.527Z DEBUG 18980 --- [demo] [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2026-02-19T21:08:17.638Z  INFO 18980 --- [demo] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@214b9b5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@72c399fd, org.springframework.security.web.context.SecurityContextHolderFilter@770bdd86, org.springframework.security.web.header.HeaderWriterFilter@4f80c511, org.springframework.web.filter.CorsFilter@6846d654, org.springframework.security.web.authentication.logout.LogoutFilter@38934406, com.backend.demo.security.JwtAuthenticationFilter@41eeff3b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2568cc21, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@144aaab1, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7df231c7, org.springframework.security.web.session.SessionManagementFilter@22b0ddc9, org.springframework.security.web.access.ExceptionTranslationFilter@3d778db9, org.springframework.security.web.access.intercept.AuthorizationFilter@2fdbef8d]
+2026-02-19T21:08:17.743Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	c.b.d.c.AdminController:
+	
+2026-02-19T21:08:17.745Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	c.b.d.c.AirQualityController:
+	
+2026-02-19T21:08:17.747Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	c.b.d.c.AlertController:
+	
+2026-02-19T21:08:17.748Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	c.b.d.c.AuthController:
+	
+2026-02-19T21:08:17.750Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	c.b.d.c.CapteurController:
+	
+2026-02-19T21:08:17.753Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	c.b.d.c.DebugController:
+	
+2026-02-19T21:08:17.764Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	c.b.d.c.MqttWebSocketController:
+	{[MESSAGE],[/airquality]}: handleAirQualityRequest()
+2026-02-19T21:08:17.765Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	c.b.d.c.NotificationController:
+	
+2026-02-19T21:08:17.766Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	c.b.d.c.NotificationWebSocketController:
+	{[MESSAGE],[/notifications.markAsRead]}: markAsRead(Long,Principal)
+	{[MESSAGE],[/notifications.connect]}: handleWebSocketConnect(Principal)
+2026-02-19T21:08:17.767Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	c.b.d.c.PasswordResetController:
+	
+2026-02-19T21:08:17.769Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	c.b.d.c.UserController:
+	
+2026-02-19T21:08:17.770Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	c.b.d.c.WeatherApiController:
+	
+2026-02-19T21:08:17.771Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	c.b.d.c.WeatherController:
+	
+2026-02-19T21:08:17.771Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	c.b.d.c.WeatherReliabilityController:
+	
+2026-02-19T21:08:17.774Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	o.s.b.a.w.s.e.BasicErrorController:
+	
+2026-02-19T21:08:17.775Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	o.s.w.a.OpenApiWebMvcResource:
+	
+2026-02-19T21:08:17.777Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	o.s.w.u.SwaggerWelcomeWebMvc:
+	
+2026-02-19T21:08:17.778Z DEBUG 18980 --- [demo] [main] .WebSocketAnnotationMethodMessageHandler : 
+	o.s.w.u.SwaggerConfigResource:
+	
+2026-02-19T21:08:17.938Z DEBUG 18980 --- [demo] [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-02-19T21:08:18.013Z DEBUG 18980 --- [demo] [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-02-19T21:08:18.969Z  INFO 18980 --- [demo] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-19T21:08:18.970Z  INFO 18980 --- [demo] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'demo.errorChannel' has 1 subscriber(s).
+2026-02-19T21:08:18.971Z  INFO 18980 --- [demo] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean '_org.springframework.integration.errorLogger'
+2026-02-19T21:08:19.013Z  INFO 18980 --- [demo] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8082 (http) with context path ''
+2026-02-19T21:08:19.016Z DEBUG 18980 --- [demo] [main] org.springframework.web.SimpLogging      : clientOutboundChannel added SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2026-02-19T21:08:19.017Z DEBUG 18980 --- [demo] [main] org.springframework.web.SimpLogging      : clientInboundChannel added WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2026-02-19T21:08:19.018Z  INFO 18980 --- [demo] [main] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2026-02-19T21:08:19.019Z DEBUG 18980 --- [demo] [main] org.springframework.web.SimpLogging      : clientInboundChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@7e4c3f5b]
+2026-02-19T21:08:19.019Z DEBUG 18980 --- [demo] [main] org.springframework.web.SimpLogging      : brokerChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@7e4c3f5b]
+2026-02-19T21:08:19.021Z  INFO 18980 --- [demo] [main] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@7e4c3f5b]]
+2026-02-19T21:08:19.022Z  INFO 18980 --- [demo] [main] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2026-02-19T21:08:19.024Z DEBUG 18980 --- [demo] [main] org.springframework.web.SimpLogging      : clientInboundChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-02-19T21:08:19.026Z DEBUG 18980 --- [demo] [main] org.springframework.web.SimpLogging      : brokerChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-02-19T21:08:19.053Z  INFO 18980 --- [demo] [main] com.backend.demo.DemoApplication         : Started DemoApplication in 22.897 seconds (process running for 24.072)
+2026-02-19T21:08:19.072Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 6.47,19.99,24.36,59.03,1.70,49
+2026-02-19T21:08:19.072Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 6.47,19.99,24.36,59.03,1.70,49
+2026-02-19T21:08:19.075Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=6.47, pm10=19.99, no2=24.36, o3=59.03, co=1.7, aqi=49}
+2026-02-19T21:08:19.205Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":6.47,"pm10":19.99,"no2":24.36,"o3":59.03,"co":1.7,"aqi":49}
+2026-02-19T21:08:19.220Z DEBUG 18980 --- [demo] [main] org.hibernate.SQL                        : 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+2026-02-19T21:09:18.966Z  INFO 18980 --- [demo] [MessageBroker-1] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2026-02-19T21:09:19.060Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 19.48,35.95,28.32,38.62,0.68,192
+2026-02-19T21:09:19.061Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 19.48,35.95,28.32,38.62,0.68,192
+2026-02-19T21:09:19.064Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=19.48, pm10=35.95, no2=28.32, o3=38.62, co=0.68, aqi=192}
+2026-02-19T21:09:19.067Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":19.48,"pm10":35.95,"no2":28.32,"o3":38.62,"co":0.68,"aqi":192}
+2026-02-19T21:09:27.035Z  INFO 18980 --- [demo] [http-nio-8082-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-19T21:09:27.036Z  INFO 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-02-19T21:09:27.037Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2026-02-19T21:09:27.038Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2026-02-19T21:09:27.040Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2026-02-19T21:09:27.046Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@1db47316
+2026-02-19T21:09:27.049Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@61e35ca3
+2026-02-19T21:09:27.051Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-02-19T21:09:27.054Z  INFO 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : Completed initialization in 18 ms
+2026-02-19T21:09:27.412Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=27.1536&lon=-13.2033
+2026-02-19T21:09:27.412Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=32.8811&lon=-6.9063
+2026-02-19T21:09:27.412Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=32.2994&lon=-9.2372
+2026-02-19T21:09:27.412Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=33.1063&lon=-8.6383
+2026-02-19T21:09:27.413Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=32.2464&lon=-8.5277
+2026-02-19T21:09:27.413Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=32.2316&lon=-7.9501
+2026-02-19T21:09:27.528Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:09:27.528Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:09:27.528Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:09:27.528Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:09:27.528Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:09:27.528Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:09:27.533Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=33.1063&lon=-8.6383
+2026-02-19T21:09:27.534Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=32.8811&lon=-6.9063
+2026-02-19T21:09:27.535Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=27.1536&lon=-13.2033
+2026-02-19T21:09:27.536Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=32.2994&lon=-9.2372
+2026-02-19T21:09:27.536Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=32.2316&lon=-7.9501
+2026-02-19T21:09:27.538Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=32.2464&lon=-8.5277
+2026-02-19T21:09:27.544Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=32.2994&lon=-9.2372", parameters={masked}
+2026-02-19T21:09:27.544Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=32.2464&lon=-8.5277", parameters={masked}
+2026-02-19T21:09:27.545Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=27.1536&lon=-13.2033", parameters={masked}
+2026-02-19T21:09:27.544Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=32.2316&lon=-7.9501", parameters={masked}
+2026-02-19T21:09:27.545Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=33.1063&lon=-8.6383", parameters={masked}
+2026-02-19T21:09:27.545Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=32.8811&lon=-6.9063", parameters={masked}
+2026-02-19T21:09:27.554Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:09:27.554Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:09:27.554Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:09:27.554Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:09:27.554Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:09:27.554Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:09:27.645Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=32.2464, lon=-8.5277
+2026-02-19T21:09:27.645Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=33.1063, lon=-8.6383
+2026-02-19T21:09:27.645Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=32.2994, lon=-9.2372
+2026-02-19T21:09:27.646Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=27.1536, lon=-13.2033
+2026-02-19T21:09:27.650Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=32.2464&lon=-8.5277&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:27.646Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=32.8811, lon=-6.9063
+2026-02-19T21:09:27.646Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=32.2316, lon=-7.9501
+2026-02-19T21:09:27.650Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=27.1536&lon=-13.2033&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:27.652Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=32.8811&lon=-6.9063&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:27.652Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=33.1063&lon=-8.6383&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:27.653Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=32.2994&lon=-9.2372&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:27.653Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=32.2316&lon=-7.9501&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:28.263Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=32.8811&lon=-6.9063&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:28.263Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=32.2464&lon=-8.5277&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:28.263Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=32.2994&lon=-9.2372&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:28.263Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=27.1536&lon=-13.2033&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:28.264Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=32.2316&lon=-7.9501&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:28.264Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=33.1063&lon=-8.6383&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:28.395Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:28.395Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:28.395Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:28.395Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:28.395Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:28.430Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:30.945Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:30.945Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:30.945Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:30.946Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:30.952Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:30.956Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:30.953Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:30.957Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:30.957Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:30.958Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:30.959Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:30.962Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:31.057Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=32.2464&lon=-8.5277&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:31.057Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=32.2316&lon=-7.9501&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:31.058Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=32.2316&lon=-7.9501&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:31.057Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=27.1536&lon=-13.2033&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:31.059Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:31.057Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=33.1063&lon=-8.6383&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:31.058Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=32.2994&lon=-9.2372&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:31.060Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=32.2994&lon=-9.2372&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:31.058Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=32.2464&lon=-8.5277&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:31.061Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:31.058Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=32.8811&lon=-6.9063&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:31.060Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=27.1536&lon=-13.2033&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:31.060Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=33.1063&lon=-8.6383&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:31.062Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:31.063Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=32.8811&lon=-6.9063&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:31.071Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:31.063Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:31.064Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:31.256Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:31.256Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:31.275Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:09:31.352Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:09:31.356Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=12.15, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:09:31.428Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:09:31.447Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=26.3226&lon=-12.8503
+2026-02-19T21:09:31.461Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:09:31.462Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=26.3226&lon=-12.8503
+2026-02-19T21:09:31.463Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=26.3226&lon=-12.8503", parameters={masked}
+2026-02-19T21:09:31.464Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:09:31.474Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=26.3226, lon=-12.8503
+2026-02-19T21:09:31.474Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=26.3226&lon=-12.8503&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:31.475Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=26.3226&lon=-12.8503&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:31.477Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:31.502Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:31.505Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:31.510Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:31.519Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:31.521Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:09:31.524Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:09:31.533Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:31.536Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:31.542Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:31.545Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:31.555Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:31.545Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:09:31.549Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:09:31.557Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:09:31.557Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:31.562Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=12.72, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:09:31.559Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=12.25, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:09:31.573Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:09:31.578Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:09:31.588Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:09:31.590Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:09:31.590Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:09:31.627Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=15.99, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:09:31.628Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:09:31.634Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:31.670Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:31.655Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=33.5731&lon=-7.5898
+2026-02-19T21:09:31.662Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=8.63, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01n (truncated)...]
+2026-02-19T21:09:31.679Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=33.2568&lon=-8.5285
+2026-02-19T21:09:31.689Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:09:31.692Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:09:31.703Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=26.3226&lon=-12.8503&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:31.729Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=32.2&lon=-8.3
+2026-02-19T21:09:31.712Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:09:31.718Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:09:31.720Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:09:31.723Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=14.09, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:09:31.729Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=26.3226&lon=-12.8503&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:31.739Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:31.737Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=33.5731&lon=-7.5898
+2026-02-19T21:09:31.744Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=33.5731&lon=-7.5898", parameters={masked}
+2026-02-19T21:09:31.739Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=33.2568&lon=-8.5285
+2026-02-19T21:09:31.743Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:09:31.744Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:09:31.762Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=33.2568&lon=-8.5028
+2026-02-19T21:09:31.751Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:09:31.758Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=33.2568&lon=-8.5285", parameters={masked}
+2026-02-19T21:09:31.763Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=32.2&lon=-8.3
+2026-02-19T21:09:31.772Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:09:31.772Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=33.5731, lon=-7.5898
+2026-02-19T21:09:31.773Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=32.2&lon=-8.3", parameters={masked}
+2026-02-19T21:09:31.774Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=33.5731&lon=-7.5898&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:31.775Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:09:31.779Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=33.2568, lon=-8.5285
+2026-02-19T21:09:31.794Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=33.2568&lon=-8.5285&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:31.788Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=33.5731&lon=-7.5898&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:31.790Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:09:31.806Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=33.2568&lon=-8.5285&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:31.817Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:31.808Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:31.850Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=33.2568&lon=-8.5028
+2026-02-19T21:09:31.809Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=32.2, lon=-8.3
+2026-02-19T21:09:31.872Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=33.2568&lon=-8.5028", parameters={masked}
+2026-02-19T21:09:31.873Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=32.2&lon=-8.3&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:31.875Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=32.2&lon=-8.3&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:31.890Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:31.894Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:09:31.942Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:31.960Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:31.963Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:31.935Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=33.2568, lon=-8.5028
+2026-02-19T21:09:31.972Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:31.973Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:31.973Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:31.976Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=33.5731&lon=-7.5898&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:31.975Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=33.2568&lon=-8.5285&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:31.977Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=33.5731&lon=-7.5898&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:31.978Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=33.2568&lon=-8.5028&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:31.989Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:09:31.979Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:31.980Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=33.2568&lon=-8.5285&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:31.991Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=33.2568&lon=-8.5028&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:31.995Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:31.995Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:32.012Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:09:32.014Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=18.48, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:09:32.025Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:09:32.026Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:32.029Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:32.037Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=32.2&lon=-8.3&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:32.038Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=32.2&lon=-8.3&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:32.039Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:32.118Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:32.119Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:32.121Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:09:32.123Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:09:32.123Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=13.88, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:09:32.126Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:09:32.135Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:32.137Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:32.138Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=33.2568&lon=-8.5028&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:09:32.139Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=33.2568&lon=-8.5028&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:09:32.139Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:09:32.158Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:32.158Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:32.160Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:09:32.161Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:09:32.163Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=12.51, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:09:32.173Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:09:32.263Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:32.263Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:32.264Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:09:32.268Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:09:32.268Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=13.91, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:09:32.272Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:09:32.509Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:09:32.511Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:09:32.518Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:09:32.524Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:09:32.528Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=14.22, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:09:32.538Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:10:19.176Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 43.54,71.60,23.32,65.25,0.31,138
+2026-02-19T21:10:19.177Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 43.54,71.60,23.32,65.25,0.31,138
+2026-02-19T21:10:19.266Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=43.54, pm10=71.6, no2=23.32, o3=65.25, co=0.31, aqi=138}
+2026-02-19T21:10:19.335Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":43.54,"pm10":71.6,"no2":23.32,"o3":65.25,"co":0.31,"aqi":138}
+2026-02-19T21:10:27.924Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/auth/login
+2026-02-19T21:10:27.931Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-02-19T21:10:27.948Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:10:27.951Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-02-19T21:10:27.960Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/api/auth/login", parameters={}
+2026-02-19T21:10:27.961Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.AuthController#login(LoginRequest, HttpServletRequest)
+2026-02-19T21:10:28.053Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [LoginRequest[email=mekkaouiimane722@gmail.com, password=Imane2001@]]
+2026-02-19T21:10:28.136Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] com.backend.demo.service.AuthService     : Tentative de connexion pour: mekkaouiimane722@gmail.com
+2026-02-19T21:10:28.175Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.password,
+        u1_0.role,
+        u1_0.status,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+2026-02-19T21:10:28.212Z  WARN 18980 --- [demo] [http-nio-8082-exec-2] com.backend.demo.service.AuthService     : Tentative de connexion avec un compte en attente: mekkaouiimane722@gmail.com
+2026-02-19T21:10:28.219Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] org.hibernate.SQL                        : 
+    select
+        ll1_0.id 
+    from
+        login_logs ll1_0 
+    where
+        ll1_0.username=? 
+        and ll1_0.ip_address=? 
+        and ll1_0.status=? 
+        and ll1_0.login_time>? 
+    limit
+        ?
+2026-02-19T21:10:28.314Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] org.hibernate.SQL                        : 
+    insert 
+    into
+        login_logs
+        (failure_reason, ip_address, login_time, path, status, user_agent, username) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2026-02-19T21:10:28.355Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:10:28.357Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{error=Votre compte est en attente de validation par un administrateur}]
+2026-02-19T21:10:28.361Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 403 FORBIDDEN
+2026-02-19T21:10:34.217Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=33.1063&lon=-8.6383
+2026-02-19T21:10:34.218Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=32.8811&lon=-6.9063
+2026-02-19T21:10:34.222Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=32.2994&lon=-9.2372
+2026-02-19T21:10:34.226Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=32.2464&lon=-8.5277
+2026-02-19T21:10:34.226Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=32.2316&lon=-7.9501
+2026-02-19T21:10:34.264Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:10:34.279Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=33.1063&lon=-8.6383
+2026-02-19T21:10:34.228Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=27.1536&lon=-13.2033
+2026-02-19T21:10:34.283Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:10:34.240Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:10:34.264Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:10:34.265Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:10:34.276Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:10:34.282Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=33.1063&lon=-8.6383", parameters={masked}
+2026-02-19T21:10:34.291Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=27.1536&lon=-13.2033
+2026-02-19T21:10:34.292Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=32.2464&lon=-8.5277
+2026-02-19T21:10:34.392Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=32.2994&lon=-9.2372
+2026-02-19T21:10:34.400Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=32.8811&lon=-6.9063
+2026-02-19T21:10:34.401Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=32.2316&lon=-7.9501
+2026-02-19T21:10:34.401Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:10:34.405Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=32.2316&lon=-7.9501", parameters={masked}
+2026-02-19T21:10:34.406Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:10:34.403Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=27.1536&lon=-13.2033", parameters={masked}
+2026-02-19T21:10:34.407Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:10:34.404Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=32.2464&lon=-8.5277", parameters={masked}
+2026-02-19T21:10:34.408Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=27.1536, lon=-13.2033
+2026-02-19T21:10:34.415Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=27.1536&lon=-13.2033&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:34.404Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=32.2994&lon=-9.2372", parameters={masked}
+2026-02-19T21:10:34.405Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=32.8811&lon=-6.9063", parameters={masked}
+2026-02-19T21:10:34.406Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=33.1063, lon=-8.6383
+2026-02-19T21:10:34.407Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=32.2316, lon=-7.9501
+2026-02-19T21:10:34.408Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:10:34.426Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=27.1536&lon=-13.2033&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:34.440Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:10:34.440Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:10:34.443Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=33.1063&lon=-8.6383&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:34.448Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=32.8811, lon=-6.9063
+2026-02-19T21:10:34.444Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=32.2316&lon=-7.9501&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:34.445Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=32.2464, lon=-8.5277
+2026-02-19T21:10:34.445Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:34.448Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=33.1063&lon=-8.6383&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:34.448Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=32.8811&lon=-6.9063&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:34.450Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=32.2994, lon=-9.2372
+2026-02-19T21:10:34.454Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=32.2316&lon=-7.9501&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:34.456Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=32.2464&lon=-8.5277&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:34.459Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:34.468Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=32.2464&lon=-8.5277&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:34.463Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=32.8811&lon=-6.9063&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:34.463Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=32.2994&lon=-9.2372&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:34.464Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:34.494Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:34.500Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:34.500Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=32.2994&lon=-9.2372&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:34.527Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:35.032Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:35.034Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:35.040Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=27.1536&lon=-13.2033&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:35.042Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=27.1536&lon=-13.2033&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:35.042Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:35.051Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:35.052Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:35.053Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=32.2994&lon=-9.2372&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:35.057Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=32.2994&lon=-9.2372&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:35.058Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:35.064Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:35.067Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:35.068Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=32.2464&lon=-8.5277&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:35.073Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=32.2464&lon=-8.5277&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:35.073Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:35.106Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:35.110Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:35.114Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=32.2316&lon=-7.9501&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:35.115Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:35.123Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=32.2316&lon=-7.9501&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:35.125Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:35.129Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:35.131Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:35.131Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:35.133Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=33.1063&lon=-8.6383&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:35.135Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=32.8811&lon=-6.9063&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:35.151Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=33.1063&lon=-8.6383&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:35.159Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:35.159Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=32.8811&lon=-6.9063&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:35.161Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:35.305Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:35.317Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:35.331Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:10:35.334Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:10:35.334Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=12.25, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:10:35.343Z DEBUG 18980 --- [demo] [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:10:35.347Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=26.3226&lon=-12.8503
+2026-02-19T21:10:35.348Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:10:35.351Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=26.3226&lon=-12.8503
+2026-02-19T21:10:35.352Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=26.3226&lon=-12.8503", parameters={masked}
+2026-02-19T21:10:35.360Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:10:35.361Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=26.3226, lon=-12.8503
+2026-02-19T21:10:35.362Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=26.3226&lon=-12.8503&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:35.363Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=26.3226&lon=-12.8503&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:35.364Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:35.457Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:35.458Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:35.458Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=26.3226&lon=-12.8503&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:35.460Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=26.3226&lon=-12.8503&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:35.460Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:35.492Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:35.494Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:35.495Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:10:35.497Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:10:35.498Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=8.63, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01n (truncated)...]
+2026-02-19T21:10:35.500Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:10:35.506Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=33.2568&lon=-8.5285
+2026-02-19T21:10:35.509Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:10:35.511Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=33.2568&lon=-8.5285
+2026-02-19T21:10:35.513Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=33.2568&lon=-8.5285", parameters={masked}
+2026-02-19T21:10:35.514Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:10:35.516Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=33.2568, lon=-8.5285
+2026-02-19T21:10:35.516Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=33.2568&lon=-8.5285&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:35.518Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=33.2568&lon=-8.5285&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:35.522Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:35.591Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:35.592Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:35.594Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:10:35.601Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:10:35.618Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=12.15, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:10:35.629Z DEBUG 18980 --- [demo] [http-nio-8082-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:10:35.640Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=33.5731&lon=-7.5898
+2026-02-19T21:10:35.658Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:10:35.661Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=33.5731&lon=-7.5898
+2026-02-19T21:10:35.662Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=33.5731&lon=-7.5898", parameters={masked}
+2026-02-19T21:10:35.663Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:10:35.664Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:35.677Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=33.5731, lon=-7.5898
+2026-02-19T21:10:35.679Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:35.680Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=33.5731&lon=-7.5898&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:35.680Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=33.2568&lon=-8.5285&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:35.681Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=33.2568&lon=-8.5285&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:35.697Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:35.697Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=33.5731&lon=-7.5898&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:35.715Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:35.734Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:35.736Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:35.741Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:10:35.745Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:10:35.749Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=12.72, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:10:35.751Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:10:35.762Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=32.2&lon=-8.3
+2026-02-19T21:10:35.764Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:10:35.777Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=32.2&lon=-8.3
+2026-02-19T21:10:35.780Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=32.2&lon=-8.3", parameters={masked}
+2026-02-19T21:10:35.781Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:10:35.783Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=32.2, lon=-8.3
+2026-02-19T21:10:35.784Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=32.2&lon=-8.3&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:35.790Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=32.2&lon=-8.3&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:35.791Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:35.831Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:35.836Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:35.838Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:35.839Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:35.860Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=33.5731&lon=-7.5898&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:35.861Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=33.5731&lon=-7.5898&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:35.862Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:35.844Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:35.857Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:10:35.895Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:35.897Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:10:35.898Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=14.22, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:10:35.897Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:10:35.925Z DEBUG 18980 --- [demo] [http-nio-8082-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:10:35.962Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:10:36.009Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:36.046Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=15.99, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:10:36.046Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:36.048Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /api/weather/coordinates?lat=33.2568&lon=-8.5028
+2026-02-19T21:10:36.060Z DEBUG 18980 --- [demo] [http-nio-8082-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:10:36.072Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:10:36.079Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:10:36.117Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:36.129Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /api/weather/coordinates?lat=33.2568&lon=-8.5028
+2026-02-19T21:10:36.130Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:10:36.129Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:36.130Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/api/weather/coordinates?lat=33.2568&lon=-8.5028", parameters={masked}
+2026-02-19T21:10:36.133Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.WeatherController#getWeatherByCoordinates(double, double)
+2026-02-19T21:10:36.134Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] c.b.demo.controller.WeatherController    : Fetching weather data for coordinates: lat=33.2568, lon=-8.5028
+2026-02-19T21:10:36.131Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=14.09, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:10:36.133Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:10:36.145Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] c.b.demo.controller.WeatherController    : Calling current weather API: https://api.openweathermap.org/data/2.5/weather?lat=33.2568&lon=-8.5028&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:36.148Z DEBUG 18980 --- [demo] [http-nio-8082-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:10:36.154Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/weather?lat=33.2568&lon=-8.5028&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:36.156Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:36.161Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:10:36.163Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=13.88, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:10:36.167Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:10:36.244Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:36.249Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:36.257Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=32.2&lon=-8.3&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:36.258Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=32.2&lon=-8.3&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:36.265Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:36.306Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:36.308Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:36.309Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] c.b.demo.controller.WeatherController    : Calling forecast API: https://api.openweathermap.org/data/2.5/forecast?lat=33.2568&lon=-8.5028&appid=API_KEY&units=metric&lang=fr
+2026-02-19T21:10:36.313Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.client.RestTemplate              : HTTP GET https://api.openweathermap.org/data/2.5/forecast?lat=33.2568&lon=-8.5028&appid=f7b4113173d775dbd8feadf99dfac5d5&units=metric&lang=fr
+2026-02-19T21:10:36.314Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2026-02-19T21:10:36.432Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:36.442Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:36.445Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:10:36.446Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:10:36.447Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=13.91, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:10:36.449Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:10:36.544Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:36.545Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:36.547Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:10:36.548Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:10:36.549Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=18.48, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:10:36.559Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:10:36.975Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Response 200 OK
+2026-02-19T21:10:36.977Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.client.RestTemplate              : Reading to [java.util.Map<?, ?>]
+2026-02-19T21:10:36.995Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] c.b.demo.controller.WeatherController    : Processing weather and forecast data
+2026-02-19T21:10:36.996Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:10:36.996Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{current={temp=12.51, visibility=10.0, weather={id=800, main=Clear, description=ciel dégagé, icon=01 (truncated)...]
+2026-02-19T21:10:36.998Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T21:11:19.080Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 29.66,10.32,17.43,58.56,0.86,13
+2026-02-19T21:11:19.091Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=29.66, pm10=10.32, no2=17.43, o3=58.56, co=0.86, aqi=13}
+2026-02-19T21:11:19.081Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 29.66,10.32,17.43,58.56,0.86,13
+2026-02-19T21:11:19.092Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":29.66,"pm10":10.32,"no2":17.43,"o3":58.56,"co":0.86,"aqi":13}
+2026-02-19T21:12:19.063Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 28.92,71.95,12.18,16.84,0.66,141
+2026-02-19T21:12:19.063Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 28.92,71.95,12.18,16.84,0.66,141
+2026-02-19T21:12:19.064Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=28.92, pm10=71.95, no2=12.18, o3=16.84, co=0.66, aqi=141}
+2026-02-19T21:12:19.066Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":28.92,"pm10":71.95,"no2":12.18,"o3":16.84,"co":0.66,"aqi":141}
+2026-02-19T21:13:19.058Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 45.67,84.15,39.41,44.85,0.48,193
+2026-02-19T21:13:19.058Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 45.67,84.15,39.41,44.85,0.48,193
+2026-02-19T21:13:19.058Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=45.67, pm10=84.15, no2=39.41, o3=44.85, co=0.48, aqi=193}
+2026-02-19T21:13:19.059Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":45.67,"pm10":84.15,"no2":39.41,"o3":44.85,"co":0.48,"aqi":193}
+2026-02-19T21:14:19.056Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 17.29,46.69,33.92,55.02,1.05,54
+2026-02-19T21:14:19.056Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 17.29,46.69,33.92,55.02,1.05,54
+2026-02-19T21:14:19.059Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=17.29, pm10=46.69, no2=33.92, o3=55.02, co=1.05, aqi=54}
+2026-02-19T21:14:19.063Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":17.29,"pm10":46.69,"no2":33.92,"o3":55.02,"co":1.05,"aqi":54}
+2026-02-19T21:15:19.061Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 32.28,91.64,16.95,44.55,0.71,193
+2026-02-19T21:15:19.061Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 32.28,91.64,16.95,44.55,0.71,193
+2026-02-19T21:15:19.062Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=32.28, pm10=91.64, no2=16.95, o3=44.55, co=0.71, aqi=193}
+2026-02-19T21:15:19.065Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":32.28,"pm10":91.64,"no2":16.95,"o3":44.55,"co":0.71,"aqi":193}
+2026-02-19T21:16:19.062Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 26.56,54.04,20.14,22.79,1.27,37
+2026-02-19T21:16:19.062Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 26.56,54.04,20.14,22.79,1.27,37
+2026-02-19T21:16:19.063Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=26.56, pm10=54.04, no2=20.14, o3=22.79, co=1.27, aqi=37}
+2026-02-19T21:16:19.064Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":26.56,"pm10":54.04,"no2":20.14,"o3":22.79,"co":1.27,"aqi":37}
+2026-02-19T21:17:19.051Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 27.36,41.31,30.54,40.26,0.23,177
+2026-02-19T21:17:19.051Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 27.36,41.31,30.54,40.26,0.23,177
+2026-02-19T21:17:19.051Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=27.36, pm10=41.31, no2=30.54, o3=40.26, co=0.23, aqi=177}
+2026-02-19T21:17:19.051Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":27.36,"pm10":41.31,"no2":30.54,"o3":40.26,"co":0.23,"aqi":177}
+2026-02-19T21:18:19.053Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 35.52,64.38,28.44,53.65,1.51,162
+2026-02-19T21:18:19.053Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 35.52,64.38,28.44,53.65,1.51,162
+2026-02-19T21:18:19.056Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=35.52, pm10=64.38, no2=28.44, o3=53.65, co=1.51, aqi=162}
+2026-02-19T21:18:19.059Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":35.52,"pm10":64.38,"no2":28.44,"o3":53.65,"co":1.51,"aqi":162}
+2026-02-19T21:19:19.062Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 35.71,40.28,38.14,67.24,1.31,5
+2026-02-19T21:19:19.062Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 35.71,40.28,38.14,67.24,1.31,5
+2026-02-19T21:19:19.063Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=35.71, pm10=40.28, no2=38.14, o3=67.24, co=1.31, aqi=5}
+2026-02-19T21:19:19.065Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":35.71,"pm10":40.28,"no2":38.14,"o3":67.24,"co":1.31,"aqi":5}
+2026-02-19T21:20:19.066Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 49.40,13.66,20.54,38.13,1.08,77
+2026-02-19T21:20:19.066Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 49.40,13.66,20.54,38.13,1.08,77
+2026-02-19T21:20:19.069Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=49.4, pm10=13.66, no2=20.54, o3=38.13, co=1.08, aqi=77}
+2026-02-19T21:20:19.079Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":49.4,"pm10":13.66,"no2":20.54,"o3":38.13,"co":1.08,"aqi":77}
+2026-02-19T21:21:19.061Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 38.67,40.99,31.52,61.94,1.68,31
+2026-02-19T21:21:19.061Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 38.67,40.99,31.52,61.94,1.68,31
+2026-02-19T21:21:19.061Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=38.67, pm10=40.99, no2=31.52, o3=61.94, co=1.68, aqi=31}
+2026-02-19T21:21:19.062Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":38.67,"pm10":40.99,"no2":31.52,"o3":61.94,"co":1.68,"aqi":31}
+2026-02-19T21:22:19.063Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 32.50,16.55,18.84,30.90,1.82,200
+2026-02-19T21:22:19.063Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 32.50,16.55,18.84,30.90,1.82,200
+2026-02-19T21:22:19.063Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=32.5, pm10=16.55, no2=18.84, o3=30.9, co=1.82, aqi=200}
+2026-02-19T21:22:19.065Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":32.5,"pm10":16.55,"no2":18.84,"o3":30.9,"co":1.82,"aqi":200}
+2026-02-19T21:23:19.057Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 42.83,52.20,29.29,39.06,1.73,78
+2026-02-19T21:23:19.057Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 42.83,52.20,29.29,39.06,1.73,78
+2026-02-19T21:23:19.058Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=42.83, pm10=52.2, no2=29.29, o3=39.06, co=1.73, aqi=78}
+2026-02-19T21:23:19.059Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":42.83,"pm10":52.2,"no2":29.29,"o3":39.06,"co":1.73,"aqi":78}
+2026-02-19T21:24:19.054Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 8.62,97.85,20.66,49.61,1.15,9
+2026-02-19T21:24:19.054Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 8.62,97.85,20.66,49.61,1.15,9
+2026-02-19T21:24:19.055Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=8.62, pm10=97.85, no2=20.66, o3=49.61, co=1.15, aqi=9}
+2026-02-19T21:24:19.056Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":8.62,"pm10":97.85,"no2":20.66,"o3":49.61,"co":1.15,"aqi":9}
+2026-02-19T21:25:19.058Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 27.98,30.92,20.86,25.10,0.49,82
+2026-02-19T21:25:19.058Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 27.98,30.92,20.86,25.10,0.49,82
+2026-02-19T21:25:19.061Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=27.98, pm10=30.92, no2=20.86, o3=25.1, co=0.49, aqi=82}
+2026-02-19T21:25:19.063Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":27.98,"pm10":30.92,"no2":20.86,"o3":25.1,"co":0.49,"aqi":82}
+2026-02-19T21:26:19.065Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 8.21,76.56,32.14,63.65,1.62,189
+2026-02-19T21:26:19.065Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 8.21,76.56,32.14,63.65,1.62,189
+2026-02-19T21:26:19.067Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=8.21, pm10=76.56, no2=32.14, o3=63.65, co=1.62, aqi=189}
+2026-02-19T21:26:19.072Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":8.21,"pm10":76.56,"no2":32.14,"o3":63.65,"co":1.62,"aqi":189}
+2026-02-19T21:27:19.063Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 28.92,70.26,13.09,10.33,0.42,119
+2026-02-19T21:27:19.063Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 28.92,70.26,13.09,10.33,0.42,119
+2026-02-19T21:27:19.063Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=28.92, pm10=70.26, no2=13.09, o3=10.33, co=0.42, aqi=119}
+2026-02-19T21:27:19.064Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":28.92,"pm10":70.26,"no2":13.09,"o3":10.33,"co":0.42,"aqi":119}
+2026-02-19T21:28:19.058Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 35.12,50.80,33.14,34.76,1.85,59
+2026-02-19T21:28:19.058Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 35.12,50.80,33.14,34.76,1.85,59
+2026-02-19T21:28:19.062Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=35.12, pm10=50.8, no2=33.14, o3=34.76, co=1.85, aqi=59}
+2026-02-19T21:28:19.077Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":35.12,"pm10":50.8,"no2":33.14,"o3":34.76,"co":1.85,"aqi":59}
+2026-02-19T21:28:25.290Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-02-19T21:28:25.295Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:28:25.305Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-02-19T21:28:25.336Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/api/auth/login", parameters={}
+2026-02-19T21:28:25.350Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.AuthController#login(LoginRequest, HttpServletRequest)
+2026-02-19T21:28:25.356Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [LoginRequest[email=ImaneMekkaoui@gmail.com, password=Imane2001@]]
+2026-02-19T21:28:25.371Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] com.backend.demo.service.AuthService     : Tentative de connexion pour: ImaneMekkaoui@gmail.com
+2026-02-19T21:28:25.395Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.password,
+        u1_0.role,
+        u1_0.status,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+2026-02-19T21:28:25.740Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.password,
+        u1_0.role,
+        u1_0.status,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+2026-02-19T21:28:26.733Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.s.a.dao.DaoAuthenticationProvider    : Failed to authenticate since password does not match stored value
+2026-02-19T21:28:26.735Z  WARN 18980 --- [demo] [http-nio-8082-exec-1] com.backend.demo.service.AuthService     : Échec de connexion - Identifiants invalides pour: ImaneMekkaoui@gmail.com
+2026-02-19T21:28:26.738Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] org.hibernate.SQL                        : 
+    select
+        ll1_0.id 
+    from
+        login_logs ll1_0 
+    where
+        ll1_0.username=? 
+        and ll1_0.ip_address=? 
+        and ll1_0.status=? 
+        and ll1_0.login_time>? 
+    limit
+        ?
+2026-02-19T21:28:26.742Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] org.hibernate.SQL                        : 
+    insert 
+    into
+        login_logs
+        (failure_reason, ip_address, login_time, path, status, user_agent, username) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2026-02-19T21:28:26.768Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:28:26.771Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{error=Invalid email or password}]
+2026-02-19T21:28:26.773Z DEBUG 18980 --- [demo] [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 401 UNAUTHORIZED
+2026-02-19T21:28:33.203Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-02-19T21:28:33.206Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:28:33.208Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-02-19T21:28:33.209Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/api/auth/login", parameters={}
+2026-02-19T21:28:33.217Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.AuthController#login(LoginRequest, HttpServletRequest)
+2026-02-19T21:28:33.224Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [LoginRequest[email=ImaneMekkaoui@gmail.com, password=ImaneMekkaoui@]]
+2026-02-19T21:28:33.230Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] com.backend.demo.service.AuthService     : Tentative de connexion pour: ImaneMekkaoui@gmail.com
+2026-02-19T21:28:33.238Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.password,
+        u1_0.role,
+        u1_0.status,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+2026-02-19T21:28:33.244Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.password,
+        u1_0.role,
+        u1_0.status,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+2026-02-19T21:28:33.943Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.s.a.dao.DaoAuthenticationProvider    : Failed to authenticate since password does not match stored value
+2026-02-19T21:28:33.946Z  WARN 18980 --- [demo] [http-nio-8082-exec-8] com.backend.demo.service.AuthService     : Échec de connexion - Identifiants invalides pour: ImaneMekkaoui@gmail.com
+2026-02-19T21:28:33.951Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] org.hibernate.SQL                        : 
+    select
+        ll1_0.id 
+    from
+        login_logs ll1_0 
+    where
+        ll1_0.username=? 
+        and ll1_0.ip_address=? 
+        and ll1_0.status=? 
+        and ll1_0.login_time>? 
+    limit
+        ?
+2026-02-19T21:28:33.955Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:28:33.956Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{error=Invalid email or password}]
+2026-02-19T21:28:33.957Z DEBUG 18980 --- [demo] [http-nio-8082-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 401 UNAUTHORIZED
+2026-02-19T21:28:40.303Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-02-19T21:28:40.306Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:28:40.306Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-02-19T21:28:40.307Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/api/auth/login", parameters={}
+2026-02-19T21:28:40.308Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.AuthController#login(LoginRequest, HttpServletRequest)
+2026-02-19T21:28:40.310Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [LoginRequest[email=ImaneMekkaoui@gmail.com, password=ImaneMekkaoui@]]
+2026-02-19T21:28:40.368Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] com.backend.demo.service.AuthService     : Tentative de connexion pour: ImaneMekkaoui@gmail.com
+2026-02-19T21:28:40.371Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.password,
+        u1_0.role,
+        u1_0.status,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+2026-02-19T21:28:40.387Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.password,
+        u1_0.role,
+        u1_0.status,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+2026-02-19T21:28:41.250Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.s.a.dao.DaoAuthenticationProvider    : Failed to authenticate since password does not match stored value
+2026-02-19T21:28:41.252Z  WARN 18980 --- [demo] [http-nio-8082-exec-3] com.backend.demo.service.AuthService     : Échec de connexion - Identifiants invalides pour: ImaneMekkaoui@gmail.com
+2026-02-19T21:28:41.255Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] org.hibernate.SQL                        : 
+    select
+        ll1_0.id 
+    from
+        login_logs ll1_0 
+    where
+        ll1_0.username=? 
+        and ll1_0.ip_address=? 
+        and ll1_0.status=? 
+        and ll1_0.login_time>? 
+    limit
+        ?
+2026-02-19T21:28:41.284Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:28:41.286Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{error=Invalid email or password}]
+2026-02-19T21:28:41.290Z DEBUG 18980 --- [demo] [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 401 UNAUTHORIZED
+2026-02-19T21:28:56.302Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-02-19T21:28:56.304Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:28:56.306Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-02-19T21:28:56.309Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/api/auth/login", parameters={}
+2026-02-19T21:28:56.332Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.AuthController#login(LoginRequest, HttpServletRequest)
+2026-02-19T21:28:56.348Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [LoginRequest[email=imanemk@gmail.com, password=imanemk@]]
+2026-02-19T21:28:56.353Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] com.backend.demo.service.AuthService     : Tentative de connexion pour: imanemk@gmail.com
+2026-02-19T21:28:56.365Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.password,
+        u1_0.role,
+        u1_0.status,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+2026-02-19T21:28:56.371Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] org.hibernate.SQL                        : 
+    select
+        ll1_0.id 
+    from
+        login_logs ll1_0 
+    where
+        ll1_0.username=? 
+        and ll1_0.ip_address=? 
+        and ll1_0.status=? 
+        and ll1_0.login_time>? 
+    limit
+        ?
+2026-02-19T21:28:56.385Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] org.hibernate.SQL                        : 
+    insert 
+    into
+        login_logs
+        (failure_reason, ip_address, login_time, path, status, user_agent, username) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2026-02-19T21:28:56.399Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:28:56.400Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{error=User not found}]
+2026-02-19T21:28:56.405Z DEBUG 18980 --- [demo] [http-nio-8082-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 404 NOT_FOUND
+2026-02-19T21:28:57.696Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-02-19T21:28:57.697Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-02-19T21:28:57.700Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-02-19T21:28:57.700Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/api/auth/login", parameters={}
+2026-02-19T21:28:57.706Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.backend.demo.controller.AuthController#login(LoginRequest, HttpServletRequest)
+2026-02-19T21:28:57.721Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [LoginRequest[email=imanemk@gmail.com, password=imanemk@]]
+2026-02-19T21:28:57.722Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] com.backend.demo.service.AuthService     : Tentative de connexion pour: imanemk@gmail.com
+2026-02-19T21:28:57.734Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.password,
+        u1_0.role,
+        u1_0.status,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+2026-02-19T21:28:57.738Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] org.hibernate.SQL                        : 
+    select
+        ll1_0.id 
+    from
+        login_logs ll1_0 
+    where
+        ll1_0.username=? 
+        and ll1_0.ip_address=? 
+        and ll1_0.status=? 
+        and ll1_0.login_time>? 
+    limit
+        ?
+2026-02-19T21:28:57.752Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-19T21:28:57.753Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{error=User not found}]
+2026-02-19T21:28:57.754Z DEBUG 18980 --- [demo] [http-nio-8082-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 404 NOT_FOUND
+2026-02-19T21:29:19.112Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 23.75,23.31,36.21,79.03,0.29,58
+2026-02-19T21:29:19.112Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 23.75,23.31,36.21,79.03,0.29,58
+2026-02-19T21:29:19.113Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=23.75, pm10=23.31, no2=36.21, o3=79.03, co=0.29, aqi=58}
+2026-02-19T21:29:19.116Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":23.75,"pm10":23.31,"no2":36.21,"o3":79.03,"co":0.29,"aqi":58}
+2026-02-19T21:30:19.056Z DEBUG 18980 --- [demo] [scheduling-1] c.b.demo.simulation.SensorSimulator      : Published to capteurs/qualite_air: 24.22,22.46,25.06,52.95,0.15,2
+2026-02-19T21:30:19.056Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 24.22,22.46,25.06,52.95,0.15,2
+2026-02-19T21:30:19.058Z  INFO 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Données parsées: AirQualityData{pm25=24.22, pm10=22.46, no2=25.06, o3=52.95, co=0.15, aqi=2}
+2026-02-19T21:30:19.060Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] org.springframework.web.SimpLogging      : Processing MESSAGE destination=/topic/airquality session=null payload={"pm25":24.22,"pm10":22.46,"no2":25.06,"o3":52.95,"co":0.15,"aqi":2}
+2026-02-19T21:31:19.069Z DEBUG 18980 --- [demo] [MQTT Call: spring-server-86ccaa59-d84d-4922-9db9-e6b9717edfdb] com.backend.demo.mqtt.MqttSubscriber     : Message brut reçu [capteurs/qualite_air]: 8.84,42.76,10.73,49.95,1.45,156
