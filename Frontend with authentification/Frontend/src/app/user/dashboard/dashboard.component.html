@@ -1,0 +1,269 @@
+<div class="flex h-screen bg-blue-50">
+  <!-- Sidebar -->
+  <div id="sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full md:translate-x-0 bg-white border-r">
+    <!-- Logo & Brand -->
+    <div class="p-4 flex items-center justify-between border-b">
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-cloud-sun text-blue-500 text-2xl"></i>
+        <h1 class="text-xl font-semibold">WeatherTrack</h1>
+      </div>
+      <button id="toggleSidebar" class="md:hidden text-gray-500 hover:text-gray-700">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    
+    <!-- User Profile -->
+    <div class="p-4 border-b">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+          <span class="text-lg font-semibold text-blue-600">{{ userName.charAt(0) }}</span>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Bonjour</p>
+          <p class="font-medium">{{ userName }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="flex-1 p-2">
+      <ul class="space-y-1">
+        <li>
+          <a href="#" class="flex items-center p-3 text-blue-600 bg-blue-50 rounded-lg">
+            <i class="fas fa-tachometer-alt w-5 h-5 mr-3"></i>
+            <span>Tableau de bord</span>
+          </a>
+        </li>
+        <li>
+          <a href="/user/meteo" class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg">
+            <i class="fas fa-cloud-sun w-5 h-5 mr-3"></i>
+            <span>Météo</span>
+          </a>
+        </li>
+        <li>
+          <a href="../../air-quality/" class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg">
+            <i class="fas fa-wind w-5 h-5 mr-3"></i>
+            <span>Qualité de l'air</span>
+          </a>
+        </li>
+        <li>
+          <a href="/user/alerts" class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg">
+            <i class="fas fa-bell w-5 h-5 mr-3"></i>
+            <span>Alertes</span>
+            <span *ngIf="unreadAlertsCount > 0" class="ml-auto bg-red-500 text-white text-xs font-medium px-2 py-0.5 rounded-full">{{ unreadAlertsCount }}</span>
+          </a>
+        </li>
+        <li>
+          <a href="/user/meteo/compare-weather/" class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg">
+            <i class="fas fa-chart-line w-5 h-5 mr-3"></i>
+            <span>Analyses</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    
+    <!-- Logout Button -->
+    <div class="p-4 border-t">
+      <button (click)="logout()" class="w-full flex items-center justify-center p-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition duration-200">
+        <i class="fas fa-sign-out-alt mr-2"></i>
+        <span>Déconnexion</span>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col overflow-hidden md:ml-64">
+    <!-- Top Navigation -->
+    <header class="bg-white shadow-sm">
+      <div class="flex items-center justify-between p-4">
+        <div class="flex items-center space-x-4">
+          <button id="mobileSidebarToggle" class="md:hidden text-gray-600">
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+          <h2 class="text-xl font-semibold text-gray-800">Tableau de Bord</h2>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+          <button class="relative text-gray-600 hover:text-gray-800">
+            <i class="fas fa-bell text-xl"></i>
+            <span *ngIf="unreadAlertsCount > 0" class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
+          </button>
+          
+          <button class="flex items-center text-gray-600 hover:text-gray-800 text-sm">
+            <i class="fas fa-map-marker-alt text-xl mr-2"></i>
+            <span>{{ currentLocation }}</span>
+          </button>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Main Dashboard -->
+    <main class="flex-1 overflow-y-auto p-4 bg-gray-50">
+      <!-- Weather Overview -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <!-- Current Weather -->
+        <div class="bg-white rounded-xl shadow-sm p-6 lg:col-span-2">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-medium text-gray-800">Conditions actuelles</h3>
+            <span class="text-sm text-gray-500">Dernière mise à jour: {{ lastUpdate | date:'HH:mm' }}</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <div class="text-6xl text-blue-500 mr-4">
+                <i class="fas fa-{{ weatherIcon }}"></i>
+              </div>
+              <div>
+                <div class="text-4xl font-bold text-gray-800">{{ currentWeather.temp }}°C</div>
+                <div class="text-gray-600">{{ weatherDescription }}</div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4 text-right">
+              <div>
+                <div class="text-sm text-gray-500">Humidité</div>
+                <div class="font-medium">{{ currentWeather.humidity }}%</div>
+              </div>
+              <div>
+                <div class="text-sm text-gray-500">Vent</div>
+                <div class="font-medium">{{ currentWeather.wind_speed }} km/h</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Air Quality Index -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-lg font-medium text-gray-800 mb-4">Indice de qualité de l'air</h3>
+          <div class="flex items-center justify-between mb-4">
+            <div class="text-4xl font-bold" [ngClass]="{
+              'text-green-600': airQualityData.aqi <= 50,
+              'text-yellow-600': airQualityData.aqi > 50 && airQualityData.aqi <= 100,
+              'text-orange-600': airQualityData.aqi > 100 && airQualityData.aqi <= 150,
+              'text-red-600': airQualityData.aqi > 150
+            }">{{ airQualityData.aqi }}</div>
+            <div class="text-right">
+              <div class="text-sm font-medium text-gray-800">{{ airQualityData.status }}</div>
+              <div class="text-xs text-gray-500">Mise à jour: {{ lastUpdate | date:'HH:mm' }}</div>
+            </div>
+          </div>
+          <div class="space-y-2">
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-600">PM2.5</span>
+              <span class="font-medium">{{ airQualityData.pm25 }} µg/m³</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-600">PM10</span>
+              <span class="font-medium">{{ airQualityData.pm10 }} µg/m³</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Weather Forecast -->
+      <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-lg font-medium text-gray-800">Prévisions sur 6 jours</h3>
+          <div class="flex space-x-2">
+            <button (click)="changeWeatherChartType('temp')" 
+                    [ngClass]="{
+                      'bg-blue-50 text-blue-600': weatherChartType === 'temp',
+                      'text-gray-600 hover:bg-gray-100': weatherChartType !== 'temp'
+                    }" 
+                    class="px-3 py-1 rounded-lg text-sm font-medium">
+              Température
+            </button>
+            <button (click)="changeWeatherChartType('precip')" 
+                    [ngClass]="{
+                      'bg-blue-50 text-blue-600': weatherChartType === 'precip',
+                      'text-gray-600 hover:bg-gray-100': weatherChartType !== 'precip'
+                    }" 
+                    class="px-3 py-1 rounded-lg text-sm font-medium">
+              Précipitations
+            </button>
+            <button (click)="changeWeatherChartType('wind')" 
+                    [ngClass]="{
+                      'bg-blue-50 text-blue-600': weatherChartType === 'wind',
+                      'text-gray-600 hover:bg-gray-100': weatherChartType !== 'wind'
+                    }" 
+                    class="px-3 py-1 rounded-lg text-sm font-medium">
+              Vent
+            </button>
+          </div>
+        </div>
+        <div class="h-80">
+          <canvas id="weatherChart"></canvas>
+        </div>
+        <!-- Daily Forecast Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-6">
+          <div *ngFor="let day of dailyForecast" class="bg-gray-50 rounded-lg p-4 text-center">
+            <div class="text-sm font-medium text-gray-600">{{ day.day }}</div>
+            <div class="text-2xl font-bold text-gray-800 mt-2">{{ day.maxTemp }}°</div>
+            <div class="text-sm text-gray-500">{{ day.minTemp }}°</div>
+            <div class="mt-2">
+              <i class="fas fa-{{ getWeatherIcon(day.icon) }} text-blue-500"></i>
+            </div>
+            <div class="text-xs text-gray-500 mt-1">{{ day.precipitation }}%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Sensor Readings -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-medium text-gray-800">Dernières mesures</h3>
+            <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">Voir tout</button>
+          </div>
+          <div class="space-y-4">
+            <div *ngFor="let reading of recentReadings" class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div class="flex items-center">
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                  <i class="fas fa-{{ reading.icon }} text-blue-600"></i>
+                </div>
+                <div>
+                  <div class="font-medium text-gray-800">{{ reading.name }}</div>
+                  <div class="text-sm text-gray-500">{{ reading.timestamp | date:'HH:mm' }}</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="font-medium text-gray-800">{{ reading.value }}{{ reading.unit }}</div>
+                <div class="text-xs text-gray-500">{{ reading.trend }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weather Alerts -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-medium text-gray-800">Alertes météo</h3>
+            <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">Voir tout</button>
+          </div>
+          <div class="space-y-4">
+            <div *ngFor="let alert of alerts.slice(0, 3)" class="p-4 rounded-lg" 
+                 [ngClass]="{
+                   'bg-red-50 border-l-4 border-red-500': alert.type === 'danger',
+                   'bg-yellow-50 border-l-4 border-yellow-500': alert.type === 'warning',
+                   'bg-blue-50 border-l-4 border-blue-500': alert.type === 'info'
+                 }">
+              <div class="flex items-start">
+                <div class="flex-shrink-0">
+                  <i class="fas" [ngClass]="{
+                    'fa-exclamation-circle text-red-500': alert.type === 'danger',
+                    'fa-exclamation-triangle text-yellow-500': alert.type === 'warning',
+                    'fa-info-circle text-blue-500': alert.type === 'info'
+                  }"></i>
+                </div>
+                <div class="ml-3">
+                  <h4 class="text-sm font-medium text-gray-800">{{ alert.title }}</h4>
+                  <p class="mt-1 text-sm text-gray-600">{{ alert.message }}</p>
+                  <p class="mt-1 text-xs text-gray-500">{{ alert.timestamp | date:'dd/MM/yyyy HH:mm' }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

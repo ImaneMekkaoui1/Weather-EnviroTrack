@@ -1,0 +1,34 @@
+/* Styles personnalisés pour le tableau de bord MQTT */
+canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Style pour les lignes du tableau */
+tr:hover {
+  background-color: #f9fafb;
+  cursor: pointer;
+}
+
+/* Style pour les notifications */
+.notification-badge {
+  top: -0.5rem;
+  right: -0.5rem;
+}
+
+/* Style pour les cartes de statut */
+.status-card {
+  transition: all 0.3s ease;
+}
+
+.status-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Style pour les boutons de pagination */
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

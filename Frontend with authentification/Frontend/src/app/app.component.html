@@ -1,0 +1,27 @@
+<main class="flex flex-col min-h-screen bg-gray-50">
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <a routerLink="/" class="text-2xl font-bold text-indigo-600 hover:text-indigo-800 transition">
+        Weather&EnviroTrack
+      </a>
+      <div class="space-x-4 hidden md:flex">
+        <a routerLink="/" fragment="about" class="hover:text-indigo-600 transition">À propos</a>
+        <a routerLink="/" fragment="features" class="hover:text-indigo-600 transition">Fonctionnalités</a>
+        <a routerLink="/auth/login" class="hover:text-indigo-600 transition">Connexion</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Router Outlet (Contenu principal) -->
+  <div class="flex-grow">
+    <router-outlet></router-outlet>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white py-6 border-t">
+    <div class="container mx-auto px-6 text-center text-gray-600">
+      © 2025 Weather&EnviroTrack - Projet universitaire réalisé par Imane Mekkaoui.
+    </div>
+  </footer>
+</main>

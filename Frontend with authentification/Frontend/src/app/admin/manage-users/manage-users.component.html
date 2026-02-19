@@ -1,0 +1,346 @@
+<div class="min-h-screen bg-gradient-to-br from-sky-50 to-slate-50 p-6">
+  <div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold text-slate-800">
+        <span class="inline-block bg-blue-600 w-2 h-8 mr-2 rounded align-middle"></span>
+        Gestion des Utilisateurs
+      </h1>
+      <div class="text-sm text-slate-500 flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        Total utilisateurs: {{ users.length }}
+        <span *ngIf="getPendingCount() > 0" class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+          {{ getPendingCount() }} en attente
+        </span>
+      </div>
+    </div>
+
+    <!-- Message d'erreur -->
+    <div *ngIf="error" class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-6 flex items-center justify-between">
+      <span>{{ error }}</span>
+      <button (click)="error = ''" class="text-red-600 hover:text-red-800">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Indicateur de chargement -->
+    <div *ngIf="isLoading" class="fixed inset-0 bg-slate-900/20 flex items-center justify-center z-50">
+      <div class="bg-white p-4 rounded-lg shadow-lg flex items-center space-x-3">
+        <div class="animate-spin rounded-full h-6 w-6 border-4 border-blue-500 border-t-transparent"></div>
+        <span>Chargement...</span>
+      </div>
+    </div>
+
+    <!-- Formulaire Add / Edit -->
+    <div class="bg-white rounded-2xl shadow-md mb-8 overflow-hidden transition-all duration-300">
+      <div class="px-6 py-4 bg-slate-50 border-b border-slate-100">
+        <h2 class="font-semibold text-lg text-slate-700">{{ isEditing ? 'Modifier Utilisateur' : 'Ajouter un Utilisateur' }}</h2>
+      </div>
+      
+      <form (ngSubmit)="saveUser()" class="p-6 grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
+        <div class="md:col-span-3">
+          <label for="username" class="block text-sm font-medium text-slate-600 mb-1">Nom d'utilisateur</label>
+          <input 
+            type="text" 
+            id="username"
+            [(ngModel)]="userForm.username" 
+            name="username" 
+            placeholder="Entrez le nom d'utilisateur" 
+            class="w-full p-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
+            required
+          >
+        </div>
+        
+        <div class="md:col-span-4">
+          <label for="email" class="block text-sm font-medium text-slate-600 mb-1">Email</label>
+          <input 
+            type="email" 
+            id="email"
+            [(ngModel)]="userForm.email" 
+            name="email" 
+            placeholder="utilisateur@exemple.com" 
+            class="w-full p-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
+            required
+          >
+        </div>
+        
+        <div class="md:col-span-3">
+          <label for="role" class="block text-sm font-medium text-slate-600 mb-1">Rôle</label>
+          <select 
+            id="role"
+            [(ngModel)]="userForm.role" 
+            name="role" 
+            class="w-full p-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent appearance-none bg-white transition-all"
+            required
+          >
+            <option value="USER">Utilisateur</option>
+            <option value="ADMIN">Administrateur</option>
+          </select>
+        </div>
+
+        <div class="md:col-span-2 flex gap-2 justify-end">
+          <button *ngIf="isEditing" 
+            type="button" 
+            (click)="cancelEdit()" 
+            class="px-4 py-3 border border-slate-300 rounded-xl text-slate-600 hover:bg-slate-50 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400"
+          >
+            Annuler
+          </button>
+          
+          <button 
+            type="submit" 
+            class="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow-sm hover:shadow transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            {{ isEditing ? 'Mettre à jour' : 'Ajouter' }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Options de recherche et filtrage -->
+    <div class="mb-6 bg-white rounded-xl shadow-sm p-4">
+      <div class="flex flex-wrap items-center gap-6">
+        <!-- Filtres par statut -->
+        <div>
+          <span class="text-sm font-medium text-slate-700 mr-2">Filtrer par statut:</span>
+          <div class="flex flex-wrap gap-2 mt-2">
+            <button 
+              (click)="statusFilter = 'all'; applyFilters()" 
+              class="px-3 py-1.5 text-sm rounded-lg transition-colors"
+              [ngClass]="statusFilter === 'all' ? 'bg-slate-200 text-slate-800' : 'bg-white text-slate-600 hover:bg-slate-100'"
+            >
+              Tous
+            </button>
+            <button 
+              (click)="statusFilter = 'pending'; applyFilters()" 
+              class="px-3 py-1.5 text-sm rounded-lg transition-colors flex items-center"
+              [ngClass]="statusFilter === 'pending' ? 'bg-amber-100 text-amber-800' : 'bg-white text-slate-600 hover:bg-slate-100'"
+            >
+              <span class="w-2 h-2 rounded-full bg-amber-500 mr-1.5"></span>
+              En attente
+            </button>
+            <button 
+              (click)="statusFilter = 'active'; applyFilters()" 
+              class="px-3 py-1.5 text-sm rounded-lg transition-colors flex items-center"
+              [ngClass]="statusFilter === 'active' ? 'bg-green-100 text-green-800' : 'bg-white text-slate-600 hover:bg-slate-100'"
+            >
+              <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span>
+              Actifs
+            </button>
+            <button 
+              (click)="statusFilter = 'inactive'; applyFilters()" 
+              class="px-3 py-1.5 text-sm rounded-lg transition-colors flex items-center"
+              [ngClass]="statusFilter === 'inactive' ? 'bg-red-100 text-red-800' : 'bg-white text-slate-600 hover:bg-slate-100'"
+            >
+              <span class="w-2 h-2 rounded-full bg-red-500 mr-1.5"></span>
+              Inactifs
+            </button>
+          </div>
+        </div>
+
+        <!-- Recherche par nom ou email -->
+        <div class="flex-grow">
+          <span class="text-sm font-medium text-slate-700 block mb-2">Rechercher:</span>
+          <div class="flex gap-2">
+            <select 
+              [(ngModel)]="searchField"
+              (change)="applyFilters()"
+              class="p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+            >
+              <option value="all">Tous les champs</option>
+              <option value="username">Nom d'utilisateur</option>
+              <option value="email">Email</option>
+            </select>
+            <div class="relative flex-grow">
+              <input 
+                type="text" 
+                [(ngModel)]="searchTerm" 
+                (input)="applyFilters()"
+                placeholder="Rechercher un utilisateur..." 
+                class="w-full p-2 pr-10 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+              >
+              <button 
+                *ngIf="searchTerm" 
+                (click)="searchTerm = ''; applyFilters()" 
+                class="absolute right-2 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <button 
+              (click)="resetFilters()" 
+              class="px-3 py-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition-colors"
+            >
+              Réinitialiser
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tableau Utilisateurs -->
+    <div class="bg-white rounded-2xl shadow-md overflow-hidden transition-all duration-300">
+      <div class="px-6 py-4 bg-slate-50 border-b border-slate-100">
+        <h2 class="font-semibold text-lg text-slate-700">Liste des Utilisateurs</h2>
+      </div>
+      
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-slate-200">
+          <thead>
+            <tr class="bg-slate-50">
+              <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Nom d'utilisateur</th>
+              <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Email</th>
+              <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Rôle</th>
+              <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Statut</th>
+              <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Date d'inscription</th>
+              <th class="px-6 py-4 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-slate-200">
+            <tr *ngFor="let user of getPaginatedUsers()" class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-800">
+                {{ user.username }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                {{ user.email }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <span 
+                  class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
+                  [ngClass]="{
+                    'bg-blue-100 text-blue-800': user.role === 'ADMIN',
+                    'bg-green-100 text-green-800': user.role === 'USER'
+                  }"
+                >
+                  {{ getRoleDisplay(user.role) }}
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <span 
+                  class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
+                  [ngClass]="getStatusClass(user)"
+                >
+                  {{ getStatusDisplay(user) }}
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                {{ user.registrationDate | date:'dd/MM/yyyy' }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <div class="flex justify-end space-x-2">
+                  <!-- Approval actions for pending users -->
+                  <div *ngIf="user.status === 'PENDING'" class="flex space-x-2 mr-2">
+                    <button 
+                      (click)="approveUser(user.id)" 
+                      class="inline-flex items-center text-green-600 hover:text-green-800 focus:outline-none"
+                      title="Approuver l'inscription"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </button>
+                    <button 
+                      (click)="rejectUser(user.id)" 
+                      class="inline-flex items-center text-red-600 hover:text-red-800 focus:outline-none"
+                      title="Rejeter l'inscription"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                  
+                  <!-- Toggle status for active users -->
+                  <button *ngIf="user.status === 'ACTIVE'"
+                    (click)="toggleUserStatus(user)" 
+                    class="inline-flex items-center text-red-600 hover:text-red-800"
+                    title="Désactiver"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-12.728 12.728M5.636 5.636l12.728 12.728" />
+                    </svg>
+                  </button>
+
+                  <!-- Réactiver un compte inactif/rejeté -->
+                  <button *ngIf="user.status === 'REJECTED' || user.status === 'INACTIVE'"
+                    (click)="toggleUserStatus(user)" 
+                    class="inline-flex items-center text-green-600 hover:text-green-800"
+                    title="Réactiver"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </button>
+                  
+                  <!-- Edit button -->
+                  <button 
+                    (click)="editUser(user)" 
+                    class="inline-flex items-center text-amber-600 hover:text-amber-900 focus:outline-none"
+                    title="Modifier"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                  </button>
+                  
+                  <!-- Delete button -->
+                  <button 
+                    (click)="deleteUser(user.id)" 
+                    class="inline-flex items-center text-red-600 hover:text-red-900 focus:outline-none"
+                    title="Supprimer"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            
+            <tr *ngIf="filteredUsers.length === 0">
+              <td colspan="6" class="px-6 py-8 text-center text-sm text-slate-500">
+                <div class="flex flex-col items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-slate-300 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  <p>Aucun utilisateur trouvé avec ce filtre</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-between items-center text-sm text-slate-500">
+        <span>Affichage de {{ getPaginatedUsers().length }} sur {{ filteredUsers.length }} utilisateurs</span>
+        <div class="flex space-x-1">
+          <button 
+            (click)="previousPage()" 
+            [disabled]="currentPage === 1"
+            class="px-3 py-1 border border-slate-300 rounded hover:bg-white transition-colors"
+            [ngClass]="{'opacity-50 cursor-not-allowed': currentPage === 1}"
+          >
+            Précédent
+          </button>
+          <span class="px-3 py-1 border border-slate-300 rounded bg-white">
+            {{ currentPage }} / {{ totalPages }}
+          </span>
+          <button 
+            (click)="nextPage()" 
+            [disabled]="currentPage === totalPages"
+            class="px-3 py-1 border border-slate-300 rounded hover:bg-white transition-colors"
+            [ngClass]="{'opacity-50 cursor-not-allowed': currentPage === totalPages}"
+          >
+            Suivant
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<div class="max-w-7xl mx-auto px-4 py-6">
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+      <!-- Header -->
+      <div class="bg-gray-50 px-6 py-4 border-b">
+        <div>
+          <h1 class="text-xl font-bold text-gray-800">Alertes</h1>
+          <div class="flex gap-4 mt-2 text-sm">
+            <span class="flex items-center">
+              <span class="w-3 h-3 rounded-full bg-red-500 mr-1"></span>
+              Critiques: {{ getAlertsCount('danger') }}
+            </span>
+            <span class="flex items-center">
+              <span class="w-3 h-3 rounded-full bg-yellow-500 mr-1"></span>
+              Avertissements: {{ getAlertsCount('warning') }}
+            </span>
+            <span class="flex items-center">
+              <span class="w-3 h-3 rounded-full bg-blue-500 mr-1"></span>
+              Informations: {{ getAlertsCount('info') }}
+            </span>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Alerts History -->
+      <div class="p-6">
+        <h2 class="text-lg font-semibold mb-4 flex items-center text-gray-800">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          Historique des Alertes
+        </h2>
+  
+        <!-- Filters -->
+        <div class="flex flex-wrap gap-3 mb-4 p-3 bg-gray-50 rounded">
+          <input type="text" [(ngModel)]="searchText" (input)="applyFilters()" 
+                 placeholder="Rechercher..." 
+                 class="px-3 py-1 border rounded text-sm flex-grow max-w-xs">
+          
+          <select [(ngModel)]="alertTypeFilter" (change)="applyFilters()" 
+                  class="px-2 py-1 border rounded text-sm">
+            <option value="all">Tous types</option>
+            <option value="air">Qualité air</option>
+            <option value="weather">Météo</option>
+          </select>
+          
+          <select [(ngModel)]="severityFilter" (change)="applyFilters()" 
+                  class="px-2 py-1 border rounded text-sm">
+            <option value="all">Tous niveaux</option>
+            <option value="danger">Critique</option>
+            <option value="warning">Avertissement</option>
+            <option value="info">Information</option>
+          </select>
+        </div>
+  
+        <!-- Alerts List -->
+        <div *ngIf="filteredAlerts.length === 0" class="text-center py-8 text-gray-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p>Aucune alerte correspondante</p>
+        </div>
+  
+        <div class="space-y-3">
+          <div *ngFor="let alert of filteredAlerts" 
+               class="p-4 rounded-lg border-l-4 hover:shadow transition"
+               [class.bg-red-50]="alert.severity === 'danger'"
+               [class.border-red-500]="alert.severity === 'danger'"
+               [class.bg-yellow-50]="alert.severity === 'warning'"
+               [class.border-yellow-500]="alert.severity === 'warning'"
+               [class.bg-blue-50]="alert.severity === 'info'"
+               [class.border-blue-500]="alert.severity === 'info'">
+            <div class="flex justify-between items-start">
+              <div class="flex items-start">
+                <div [class]="getSeverityIconClass(alert.severity)" class="mt-1 mr-3 text-lg"></div>
+                <div>
+                  <p class="font-medium">{{ alert.message }}</p>
+                  <div class="flex flex-wrap gap-2 mt-1">
+                    <span [class]="getSeverityBadgeClass(alert.severity)">
+                      {{ alert.severity | uppercase }}
+                    </span>
+                    <span [class]="getTypeBadgeClass(alert.type)">
+                      {{ alert.type | uppercase }}
+                    </span>
+                    <span class="text-xs text-gray-500">
+                      {{ alert.timestamp | date:'medium' }}
+                    </span>
+                    <span *ngIf="alert.parameter && alert.value" class="text-xs text-gray-600">
+                      {{ getParameterLabel(alert.parameter) }}: {{ alert.value }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

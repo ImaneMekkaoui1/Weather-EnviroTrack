@@ -1,0 +1,275 @@
+<div class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-blue-50 to-cyan-100 relative overflow-hidden">
+  <!-- Éléments d'arrière-plan météo style clair -->
+  <div class="absolute inset-0 overflow-hidden">
+    <!-- Nuages animés -->
+    <div class="cloud-1 absolute top-20 left-10 opacity-80 text-blue-200">
+      <svg xmlns="http://www.w3.org/2000/svg" width="120" height="80" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19 18H6a4 4 0 0 1 0-8h.71a5.5 5.5 0 0 1 10.58 0H18a3 3 0 0 1 1 5.83"/>
+      </svg>
+    </div>
+    <div class="cloud-2 absolute top-40 right-20 opacity-70 text-blue-300">
+      <svg xmlns="http://www.w3.org/2000/svg" width="160" height="100" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19 18H6a4 4 0 0 1 0-8h.71a5.5 5.5 0 0 1 10.58 0H18a3 3 0 0 1 1 5.83"/>
+      </svg>
+    </div>
+    
+    <!-- Rayons de soleil subtils -->
+    <div class="absolute top-0 right-0 w-64 h-64">
+      <div class="sun-rays absolute inset-0 bg-yellow-200/20 rounded-full blur-md"></div>
+    </div>
+  </div>
+
+  <!-- Carte principale style clair avec thème météo -->
+  <div class="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden border border-blue-100 backdrop-blur-sm relative z-10 transition-all duration-300 hover:shadow-xl">
+    <!-- Header avec thème ciel bleu -->
+    <div class="relative bg-gradient-to-r from-blue-400 to-cyan-400 px-8 py-8 text-center overflow-hidden border-b border-blue-200">
+      <div class="absolute top-0 left-0 w-full h-full opacity-20">
+        <div class="sun-circle absolute top-1/4 right-1/4 w-16 h-16 rounded-full bg-yellow-200 blur-sm"></div>
+      </div>
+      
+      <div class="relative z-10">
+        <div class="flex justify-center mb-4">
+          <!-- Icône météo pour connexion -->
+          <div class="weather-icon relative">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white drop-shadow-lg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+            </svg>
+          </div>
+        </div>
+        <h2 class="text-3xl font-bold text-white tracking-tight">Connexion</h2>
+        <p class="mt-2 text-blue-50 font-medium">Accédez à Weather&EnviroTrack</p>
+      </div>
+    </div>
+
+    <!-- Formulaire -->
+    <div class="px-8 py-6 bg-white">
+      <form class="space-y-5" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Adresse email *</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-blue-400">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <input 
+              id="email" 
+              name="email" 
+              type="email" 
+              autocomplete="email" 
+              required
+              formControlName="email"
+              [class.border-red-500]="email?.invalid && (email?.dirty || email?.touched)"
+              [class.border-emerald-500]="email?.valid && (email?.dirty || email?.touched)"
+              class="w-full pl-10 pr-10 py-3 bg-blue-50/50 text-gray-700 placeholder-blue-300 rounded-lg border border-blue-200 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition duration-200"
+              placeholder="votre@email.com">
+          </div>
+          <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="mt-1 text-xs text-red-500">
+            <div *ngIf="email?.errors?.['required']" class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+              </svg>
+              L'email est requis
+            </div>
+            <div *ngIf="email?.errors?.['email']" class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+              </svg>
+              Veuillez entrer un email valide
+            </div>
+          </div>
+        </div>
+
+        <!-- Mot de passe -->
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe *</label>
+            <a routerLink="/auth/forgot-password" class="text-xs font-medium text-cyan-500 hover:text-cyan-600 transition duration-200">
+              Mot de passe oublié ?
+            </a>
+          </div>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-blue-400">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+            <input 
+              id="password" 
+              name="password" 
+              [type]="showPassword ? 'text' : 'password'" 
+              autocomplete="current-password" 
+              required
+              formControlName="password"
+              [class.border-red-500]="password?.invalid && (password?.dirty || password?.touched)"
+              [class.border-emerald-500]="password?.valid && (password?.dirty || password?.touched)"
+              class="w-full pl-10 pr-10 py-3 bg-blue-50/50 text-gray-700 placeholder-blue-300 rounded-lg border border-blue-200 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition duration-200"
+              placeholder="••••••••">
+            <button
+              type="button"
+              (click)="togglePasswordVisibility()"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-blue-400 hover:text-blue-600 transition duration-200"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  [attr.d]="showPassword ? 
+                    'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z' : 
+                    'M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21'"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="mt-1 text-xs text-red-500">
+            <div *ngIf="password?.errors?.['required']" class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+              </svg>
+              Le mot de passe est requis
+            </div>
+          </div>
+        </div>
+
+        <!-- Se souvenir de moi -->
+        <div class="flex items-center">
+          <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-cyan-600 focus:ring-cyan-500 border-blue-200 rounded">
+          <label for="remember-me" class="ml-2 block text-sm text-gray-700">
+            Se souvenir de moi
+          </label>
+        </div>
+
+        <!-- Message d'erreur -->
+        <div *ngIf="errorMessage" class="rounded-md bg-red-50 p-4 border border-red-200">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-red-800">{{ errorMessage }}</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bouton de connexion -->
+        <div>
+          <button
+            type="submit"
+            [disabled]="loginForm.invalid || isLoading"
+            class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 group relative overflow-hidden">
+            <span class="absolute inset-0 bg-white/20 group-hover:bg-white/10 transition duration-300"></span>
+            <span *ngIf="!isLoading" class="relative flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+              </svg>
+              Se connecter
+            </span>
+            <span *ngIf="isLoading" class="relative flex items-center">
+              <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Connexion en cours...
+            </span>
+          </button>
+        </div>
+      </form>
+
+      <!-- Séparateur pour connexion sociale -->
+      <div class="mt-6">
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-white text-gray-500 text-xs">
+              Ou continuez avec
+            </span>
+          </div>
+        </div>
+
+        <!-- Bouton Connexion Google -->
+        <div class="mt-6 flex justify-center">
+          <asl-google-signin-button type="standard" size="large"></asl-google-signin-button>
+        </div>
+      </div>
+
+      <!-- Lien vers inscription -->
+      <div class="mt-6 text-center text-sm">
+        <p class="text-gray-600">
+          Pas encore de compte ? 
+          <a routerLink="/auth/register" class="font-medium text-cyan-500 hover:text-cyan-600 transition duration-200">
+            Créer un compte
+          </a>
+        </p>
+      </div>
+      
+      <!-- Lien retour à l'accueil -->
+      <div class="mt-3 text-center text-sm">
+        <a routerLink="/" class="font-medium text-cyan-500 hover:text-cyan-600 transition duration-200 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Retour à l'accueil
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="px-8 py-4 text-center text-xs text-gray-500 border-t border-gray-200 bg-gray-50">
+      <p>© 2025 Weather&EnviroTrack. Tous droits réservés.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Styles -->
+<style>
+  /* Animations des nuages */
+  .cloud-1 {
+    animation: float 25s ease-in-out infinite;
+  }
+  .cloud-2 {
+    animation: float-alt 30s ease-in-out infinite;
+  }
+  @keyframes float {
+    0% { transform: translateY(0px) translateX(0px) scale(1); opacity: 0.7; }
+    50% { transform: translateY(-10px) translateX(20px) scale(1.02); opacity: 0.8; }
+    100% { transform: translateY(0px) translateX(0px) scale(1); opacity: 0.7; }
+  }
+  @keyframes float-alt {
+    0% { transform: translateY(5px) translateX(-10px) scale(1); opacity: 0.7; }
+    50% { transform: translateY(15px) translateX(-25px) scale(1.03); opacity: 0.8; }
+    100% { transform: translateY(5px) translateX(-10px) scale(1); opacity: 0.7; }
+  }
+  
+  /* Animation pour l'icône météo */
+  .weather-icon {
+    animation: pulse 4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.05) rotate(2deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+  
+  /* Animation des rayons de soleil */
+  .sun-rays {
+    animation: pulse-opacity 3s ease-in-out infinite alternate;
+  }
+  @keyframes pulse-opacity {
+    0% { opacity: 0.1; transform: scale(0.95); }
+    100% { opacity: 0.3; transform: scale(1.05); }
+  }
+
+  /* Transition globale douce */
+  * {
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+</style>

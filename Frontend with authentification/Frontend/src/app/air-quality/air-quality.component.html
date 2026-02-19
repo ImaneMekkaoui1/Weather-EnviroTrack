@@ -1,0 +1,202 @@
+<div class="max-w-6xl mx-auto p-4 space-y-6">
+  <!-- En-tête -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <h1 class="text-2xl font-bold text-gray-800">
+      Qualité de l'air 
+      <span class="text-lg font-normal text-gray-600">
+        - Données en temps réel
+      </span>
+    </h1>
+    
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2">
+        <span class="relative flex h-3 w-3">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                [class.bg-green-500]="isConnected"
+                [class.bg-red-500]="!isConnected"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3"
+                [class.bg-green-500]="isConnected"
+                [class.bg-red-500]="!isConnected"></span>
+        </span>
+        <span>{{ isConnected ? 'Connecté' : 'Déconnecté' }}</span>
+      </div>
+      
+      <button *ngIf="!isConnected" (click)="reconnect()" 
+              class="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition">
+        Reconnecter
+      </button>
+    </div>
+  </div>
+
+  <!-- Alertes -->
+  <div class="bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="bg-gray-50 px-6 py-3 border-b flex justify-between items-center">
+      <h2 class="font-semibold text-gray-800">Alertes récentes</h2>
+      <div class="flex gap-2">
+        <button *ngIf="isAdmin" (click)="configureAlerts()"
+                class="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition">
+          Gérer les alertes
+        </button>
+        <button *ngIf="isAdmin" (click)="clearAlerts()" 
+                class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition">
+          Effacer tout
+        </button>
+      </div>
+    </div>
+    
+    <div class="p-4 space-y-2">
+      <div *ngFor="let alert of alerts" 
+           class="p-3 rounded-lg border-l-4 flex items-start gap-3"
+           [class.bg-red-50]="alert.severity === 'danger'"
+           [class.border-red-500]="alert.severity === 'danger'"
+           [class.bg-yellow-50]="alert.severity === 'warning'"
+           [class.border-yellow-500]="alert.severity === 'warning'"
+           [class.bg-blue-50]="alert.severity === 'info'"
+           [class.border-blue-500]="alert.severity === 'info'">
+        <span *ngIf="alert.severity === 'danger'" class="text-red-500">⚠️</span>
+        <span *ngIf="alert.severity === 'warning'" class="text-yellow-500">⚠️</span>
+        <span *ngIf="alert.severity === 'info'" class="text-blue-500">ℹ️</span>
+        <div>
+          <p class="font-medium">{{ alert.message }}</p>
+          <p class="text-sm text-gray-500">{{ alert.timestamp | date:'mediumTime' }}</p>
+          <span *ngIf="alert.type" class="inline-block mt-1 px-2 py-1 text-xs rounded-full"
+                [class]="getAlertTypeClass(alert.type)">
+            {{ alert.type === 'air' ? 'QUALITÉ AIR' : 'MÉTÉO' }}
+          </span>
+        </div>
+      </div>
+      
+      <div *ngIf="alerts.length === 0" class="text-center text-gray-500 py-4">
+        Aucune alerte récente
+      </div>
+    </div>
+  </div>
+
+  <!-- Carte principale -->
+  <div class="bg-white rounded-xl shadow-md overflow-hidden">
+    <!-- En-tête -->
+    <div class="bg-gray-50 px-6 py-4 border-b flex justify-between items-center">
+      <h2 class="text-xl font-bold text-gray-800">Indice de qualité de l'air (AQI)</h2>
+      <button (click)="toggleHistory()" 
+              class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded hover:bg-gray-200 transition">
+        {{ showHistory ? 'Masquer' : 'Afficher' }} historique
+      </button>
+    </div>
+    
+    <!-- Corps -->
+    <div class="p-6">
+      <!-- Indice AQI et graphique -->
+      <div class="flex flex-col md:flex-row gap-8 mb-8">
+        <!-- Cercle AQI -->
+        <div class="flex flex-col items-center flex-shrink-0">
+          <div class="w-32 h-32 rounded-full flex items-center justify-center text-3xl font-bold mb-3 shadow-md"
+               [class.bg-green-500]="airQualityData.aqi <= 50"
+               [class.text-white]="airQualityData.aqi <= 50"
+               [class.bg-yellow-400]="airQualityData.aqi > 50 && airQualityData.aqi <= 100"
+               [class.bg-orange-500]="airQualityData.aqi > 100 && airQualityData.aqi <= 150"
+               [class.text-white]="airQualityData.aqi > 100"
+               [class.bg-red-500]="airQualityData.aqi > 150 && airQualityData.aqi <= 200"
+               [class.bg-purple-500]="airQualityData.aqi > 200 && airQualityData.aqi <= 300"
+               [class.bg-maroon-500]="airQualityData.aqi > 300">
+            {{ airQualityData.aqi || '--' }}
+          </div>
+          <div class="px-4 py-2 rounded-full font-medium text-center"
+               [class.bg-green-100]="airQualityData.aqi <= 50"
+               [class.text-green-800]="airQualityData.aqi <= 50"
+               [class.bg-yellow-100]="airQualityData.aqi > 50 && airQualityData.aqi <= 100"
+               [class.text-yellow-800]="airQualityData.aqi > 50 && airQualityData.aqi <= 100"
+               [class.bg-orange-100]="airQualityData.aqi > 100 && airQualityData.aqi <= 150"
+               [class.text-orange-800]="airQualityData.aqi > 100 && airQualityData.aqi <= 150"
+               [class.bg-red-100]="airQualityData.aqi > 150 && airQualityData.aqi <= 200"
+               [class.text-red-800]="airQualityData.aqi > 150 && airQualityData.aqi <= 200"
+               [class.bg-purple-100]="airQualityData.aqi > 200 && airQualityData.aqi <= 300"
+               [class.text-purple-800]="airQualityData.aqi > 200 && airQualityData.aqi <= 300"
+               [class.bg-maroon-100]="airQualityData.aqi > 300"
+               [class.text-maroon-800]="airQualityData.aqi > 300">
+            {{ getAqiLabel(airQualityData.aqi) }}
+          </div>
+        </div>
+        
+        <!-- Graphique historique -->
+        <div class="flex-grow" *ngIf="showHistory">
+          <div class="h-64">
+            <canvas id="historyChart"></canvas>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Grille des capteurs -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <!-- PM2.5 -->
+        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow transition">
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="text-sm font-medium text-gray-500 mb-1">PM2.5</div>
+              <div class="text-2xl font-bold">{{ airQualityData.pm25 || '--' }} <span class="text-sm font-normal">µg/m³</span></div>
+            </div>
+            <span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">Particules fines</span>
+          </div>
+        </div>
+        
+        <!-- PM10 -->
+        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow transition">
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="text-sm font-medium text-gray-500 mb-1">PM10</div>
+              <div class="text-2xl font-bold">{{ airQualityData.pm10 || '--' }} <span class="text-sm font-normal">µg/m³</span></div>
+            </div>
+            <span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">Particules</span>
+          </div>
+        </div>
+        
+        <!-- NO₂ -->
+        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow transition">
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="text-sm font-medium text-gray-500 mb-1">NO₂</div>
+              <div class="text-2xl font-bold">{{ airQualityData.no2 || '--' }} <span class="text-sm font-normal">ppb</span></div>
+            </div>
+            <span class="px-2 py-1 text-xs rounded-full bg-purple-100 text-purple-800">Dioxyde d'azote</span>
+          </div>
+        </div>
+        
+        <!-- O₃ -->
+        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow transition">
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="text-sm font-medium text-gray-500 mb-1">O₃</div>
+              <div class="text-2xl font-bold">{{ airQualityData.o3 || '--' }} <span class="text-sm font-normal">ppb</span></div>
+            </div>
+            <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Ozone</span>
+          </div>
+        </div>
+        
+        <!-- CO -->
+        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow transition">
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="text-sm font-medium text-gray-500 mb-1">CO</div>
+              <div class="text-2xl font-bold">{{ airQualityData.co || '--' }} <span class="text-sm font-normal">ppm</span></div>
+            </div>
+            <span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800">Monoxyde de carbone</span>
+          </div>
+        </div>
+        
+        <!-- Actions admin -->
+        <div *ngIf="isAdmin" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow transition">
+          <div class="text-sm font-medium text-gray-500 mb-2">Actions administrateur</div>
+          <div class="space-y-2">
+            <button (click)="configureAlerts()"
+                    class="w-full px-3 py-2 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition">
+              Configurer les alertes
+            </button>
+            <button (click)="exportData()"
+                    class="w-full px-3 py-2 bg-green-500 text-white text-sm rounded hover:bg-green-600 transition">
+              Exporter les données
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather&EnviroTrack - Surveillance Météo OCP</title>
+  <!-- Chargement des polices et icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.12/css/weather-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Chargement de l'API Google Maps -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZYpDeOnVtvc21gltzn8ZbXf4PF6riIgU&callback=initMap" async defer></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .weather-card {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .floating {
+      animation: floating 3s ease-in-out infinite;
+    }
+    @keyframes floating {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    #google-map {
+      height: 400px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans">
+  <!-- Navigation -->
+  <header class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-sm shadow-sm z-50">
+    <div class="container mx-auto px-6 py-3">
+      <div class="flex justify-between items-center">
+        <a href="#" class="text-2xl font-bold text-gray-800 hover:text-gray-900 transition flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-4.9-6.9M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          Weather<span class="text-blue-600">&</span>EnviroTrack
+        </a>
+        <nav class="hidden md:flex space-x-6">
+          <a href="#about" class="text-gray-600 hover:text-blue-600 transition cursor-pointer font-medium">À propos</a>
+          <a href="#features" class="text-gray-600 hover:text-blue-600 transition cursor-pointer font-medium">Fonctionnalités</a>
+          <a href="#map" class="text-gray-600 hover:text-blue-600 transition cursor-pointer font-medium">Carte</a>
+          <a href="/auth/login" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition shadow-sm hover:shadow-md flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+            </svg>
+            Se connecter
+          </a>
+        </nav>
+        <button class="md:hidden text-gray-600">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Espace pour la navigation fixe -->
+  <div class="h-16"></div>
+
+  <!-- Hero Section avec background météo -->
+  <section class="relative py-20 bg-cover bg-center transition-all duration-1000 ease-in-out" [style.background-image]="'url(' + heroImages[currentImageIndex] + ')'">
+    <div class="absolute inset-0 bg-blue-900/30 transition-opacity duration-1000"></div>
+    <!-- Loading indicator -->
+    <div *ngIf="!imagesLoaded" class="absolute inset-0 flex items-center justify-center bg-gray-900/50 z-20">
+      <div class="text-white text-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+        <p>Chargement des images...</p>
+      </div>
+    </div>
+    <!-- Flèches de navigation -->
+    <button (click)="prevImage()" class="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/60 hover:bg-white/90 text-blue-700 rounded-full p-2 shadow-lg transition hidden md:block">
+      <i class="fas fa-chevron-left text-2xl"></i>
+    </button>
+    <button (click)="nextImage()" class="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white/60 hover:bg-white/90 text-blue-700 rounded-full p-2 shadow-lg transition hidden md:block">
+      <i class="fas fa-chevron-right text-2xl"></i>
+    </button>
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-10 md:mb-0">
+          <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+            Surveillance Météo <span class="text-blue-300">&</span> Environnementale
+          </h1>
+          <p class="text-lg text-blue-100 mb-8">
+            Solution complète de surveillance des conditions météorologiques et environnementales pour les sites OCP.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="/auth/login" class="bg-white text-blue-600 hover:bg-gray-100 px-6 py-3 rounded font-medium shadow hover:shadow-md transition flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+              </svg>
+              Se connecter
+            </a>
+            <a href="#map" class="bg-blue-600/90 hover:bg-blue-700 text-white px-6 py-3 rounded font-medium shadow hover:shadow-md transition flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+              </svg>
+              Explorer la carte
+            </a>
+          </div>
+        </div>
+        <div class="md:w-1/2">
+          <!-- Widget météo OCP style glassmorphism -->
+          <div class="backdrop-blur-lg bg-white/60 rounded-xl shadow-2xl p-6 text-gray-900 max-w-md mx-auto floating border border-white/30">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-xl font-semibold text-gray-800">Surveillance OCP</h2>
+              <div class="text-sm text-gray-600">Mise à jour: {{currentTime | date:'HH:mm'}}</div>
+            </div>
+            <div class="flex items-center justify-between mb-6 bg-white/30 p-4 rounded-lg">
+              <div class="flex items-center">
+                <div class="text-5xl font-bold mr-4 text-gray-900">{{elJadidaWeather?.current?.temp || '--'}}°C</div>
+                <div>
+                  <div class="capitalize text-gray-700">{{elJadidaWeather?.current?.condition || 'Chargement...'}}</div>
+                  <div class="text-sm text-gray-600">Ressenti: {{elJadidaWeather?.current?.feelsLike || '--'}}°C</div>
+                </div>
+              </div>
+              <div class="text-5xl text-blue-500">
+                <i [class]="getWeatherIcon(elJadidaWeather?.current?.condition)"></i>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mb-6 text-sm">
+              <div class="flex items-center bg-white/40 p-3 rounded-lg">
+                <i class="wi wi-humidity mr-2 text-xl text-blue-400"></i>
+                <div>
+                  <div class="text-gray-600">Humidité</div>
+                  <div class="font-medium text-gray-900">{{elJadidaWeather?.current?.humidity || '--'}}%</div>
+                </div>
+              </div>
+              <div class="flex items-center bg-white/40 p-3 rounded-lg">
+                <i class="wi wi-strong-wind mr-2 text-xl text-blue-400"></i>
+                <div>
+                  <div class="text-gray-600">Vent</div>
+                  <div class="font-medium text-gray-900">{{elJadidaWeather?.wind?.speed || '--'}} km/h {{elJadidaWeather?.wind?.direction || '--'}}</div>
+                </div>
+              </div>
+              <div class="flex items-center bg-white/40 p-3 rounded-lg">
+                <i class="wi wi-barometer mr-2 text-xl text-blue-400"></i>
+                <div>
+                  <div class="text-gray-600">Pression</div>
+                  <div class="font-medium text-gray-900">{{elJadidaWeather?.current?.pressure || '--'}} hPa</div>
+                </div>
+              </div>
+              <div class="flex items-center bg-white/40 p-3 rounded-lg">
+                <i class="wi wi-fog mr-2 text-xl text-blue-400"></i>
+                <div>
+                  <div class="text-gray-600">Visibilité</div>
+                  <div class="font-medium text-gray-900">{{elJadidaWeather?.current?.visibility || '--'}} km</div>
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-between text-center text-sm pt-4 border-t border-white/30">
+              <div class="px-2" *ngFor="let site of ocpSites.slice(0, 5)">
+                <div class="font-medium text-gray-700">{{site.name}}</div>
+                <div class="text-2xl my-1 text-blue-400">
+                  <i [class]="getWeatherIcon(site.condition)"></i>
+                </div>
+                <div class="font-bold text-gray-900">{{site.temperature || '--'}}°</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Statistiques -->
+  <section class="py-12 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 text-center hover:shadow-md transition">
+          <div class="text-blue-500 mb-2 text-3xl">
+            <i class="wi wi-time-3"></i>
+          </div>
+          <p class="text-3xl font-bold text-gray-800">24/7</p>
+          <p class="text-gray-600 mt-2">Surveillance</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 text-center hover:shadow-md transition">
+          <div class="text-blue-500 mb-2 text-3xl">
+            <i class="wi wi-barometer"></i>
+          </div>
+          <p class="text-3xl font-bold text-gray-800">95%</p>
+          <p class="text-gray-600 mt-2">Précision</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 text-center hover:shadow-md transition">
+          <div class="text-blue-500 mb-2 text-3xl">
+            <i class="wi wi-lock"></i>
+          </div>
+          <p class="text-3xl font-bold text-gray-800">100%</p>
+          <p class="text-gray-600 mt-2">Sécurité</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 text-center hover:shadow-md transition">
+          <div class="text-blue-500 mb-2 text-3xl">
+            <i class="wi wi-factory"></i>
+          </div>
+          <p class="text-3xl font-bold text-gray-800">5+</p>
+          <p class="text-gray-600 mt-2">Sites OCP</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section À propos -->
+  <section id="about" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">À propos de notre solution</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Weather&EnviroTrack offre une surveillance complète des conditions environnementales pour optimiser la gestion des sites OCP.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition">
+          <div class="text-blue-500 mb-4 text-3xl">
+            <i class="wi wi-day-sunny"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3 text-gray-800">Prévisions météo</h3>
+          <p class="text-gray-600">Accédez aux prévisions météorologiques détaillées jusqu'à 6 jours à l'avance.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition">
+          <div class="text-blue-500 mb-4 text-3xl">
+            <i class="wi wi-refresh"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3 text-gray-800">Données en temps réel</h3>
+          <p class="text-gray-600">Consultez les conditions météorologiques et environnementales en temps réel.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition">
+          <div class="text-blue-500 mb-4 text-3xl">
+            <i class="wi wi-alarm"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3 text-gray-800">Système d'alertes</h3>
+          <p class="text-gray-600">Recevez des alertes instantanées en cas de conditions météorologiques extrêmes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Fonctionnalités -->
+  <section id="features" class="py-16 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Nos Fonctionnalités</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Découvrez les fonctionnalités puissantes de notre plateforme de surveillance.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="flex items-start">
+          <div class="bg-blue-100 p-3 rounded-full mr-4 mt-1">
+            <i class="fas fa-map-marked-alt text-blue-600 text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2 text-gray-800">Cartographie interactive</h3>
+            <p class="text-gray-600">Visualisez tous les sites OCP sur une carte interactive avec indicateurs en temps réel.</p>
+          </div>
+        </div>
+        <div class="flex items-start">
+          <div class="bg-blue-100 p-3 rounded-full mr-4 mt-1">
+            <i class="wi wi-rain text-blue-600 text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2 text-gray-800">Prévisions météo</h3>
+            <p class="text-gray-600">Accédez aux prévisions quotidiennes, hebdomadaires et mensuelles.</p>
+          </div>
+        </div>
+        <div class="flex items-start">
+          <div class="bg-blue-100 p-3 rounded-full mr-4 mt-1">
+            <i class="fas fa-sync-alt text-blue-600 text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2 text-gray-800">Données temps réel</h3>
+            <p class="text-gray-600">Visualisez les données météorologiques et environnementales actuelles.</p>
+          </div>
+        </div>
+        <div class="flex items-start">
+          <div class="bg-blue-100 p-3 rounded-full mr-4 mt-1">
+            <i class="fas fa-bell text-blue-600 text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2 text-gray-800">Alertes intelligentes</h3>
+            <p class="text-gray-600">Recevez des notifications pour les conditions extrêmes.</p>
+          </div>
+        </div>
+        <div class="flex items-start">
+          <div class="bg-blue-100 p-3 rounded-full mr-4 mt-1">
+            <i class="fas fa-wifi text-blue-600 text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2 text-gray-800">Intégration IoT</h3>
+            <p class="text-gray-600">Données des capteurs IoT pour la qualité de l'air et autres paramètres.</p>
+          </div>
+        </div>
+        <div class="flex items-start">
+          <div class="bg-blue-100 p-3 rounded-full mr-4 mt-1">
+            <i class="fas fa-chart-line text-blue-600 text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2 text-gray-800">Analyse historique</h3>
+            <p class="text-gray-600">Explorez l'historique des données pour identifier les tendances.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Carte -->
+  <section id="map" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Localisation des sites OCP</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Visualisez les données météorologiques et environnementales en temps réel.
+        </p>
+      </div>
+      
+      <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+        <div class="flex flex-col md:flex-row gap-4">
+          <div class="relative flex-grow">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <input type="text"
+                   placeholder="Rechercher un site OCP (ex: Jorf Lasfar, Khouribga...)"
+                   class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+          
+          <button class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition shadow-sm hover:shadow-md flex items-center justify-center">
+            <span>Rechercher</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Carte Google Maps -->
+      <div id="google-map"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-12">
+    <div class="container mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-xl font-bold mb-4 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-4.9-6.9M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            Weather&EnviroTrack
+          </h3>
+          <p class="text-gray-400">Solution de surveillance météo et environnementale.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold text-lg mb-4">Navigation</h4>
+          <ul class="space-y-2">
+            <li><a href="#about" class="text-gray-400 hover:text-white transition">À propos</a></li>
+            <li><a href="#features" class="text-gray-400 hover:text-white transition">Fonctionnalités</a></li>
+            <li><a href="#map" class="text-gray-400 hover:text-white transition">Carte</a></li>
+            <li><a href="/auth/login" class="text-gray-400 hover:text-white transition">Connexion</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-lg mb-4">Contact</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              +212 500 000 000
+            </li>
+            <li class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              contact&#64;weatherenvirotrack.ma
+            </li>
+            <li class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              EL JADIDA, Maroc
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-lg mb-4">Météo actuelle</h4>
+          <div class="flex items-center">
+            <i class="wi wi-day-sunny text-4xl mr-3"></i>
+            <div>
+              <div class="font-bold">Casablanca</div>
+              <div class="text-gray-400">22°C • Ensoleillé</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+        <p>© 2025 Weather&EnviroTrack. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Initialisation de la carte Google Maps
+    function initMap() {
+      // Coordonnées de Casablanca
+      const casablanca = { lat: 33.5731, lng: -7.5898 };
+      
+      // Création de la carte centrée sur Casablanca
+      const map = new google.maps.Map(document.getElementById("google-map"), {
+        zoom: 10,
+        center: casablanca,
+        styles: [
+          {
+            "featureType": "administrative",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#444444"
+              }
+            ]
+          },
+          {
+            "featureType": "landscape",
+            "elementType": "all",
+            "stylers": [
+              {
+                "color": "#f2f2f2"
+              }
+            ]
+          },
+          {
+            "featureType": "poi",
+            "elementType": "all",
+            "stylers": [
+              {
+                "visibility": "off"
+              }
+            ]
+          },
+          {
+            "featureType": "road",
+            "elementType": "all",
+            "stylers": [
+              {
+                "saturation": -100
+              },
+              {
+                "lightness": 45
+              }
+            ]
+          },
+          {
+            "featureType": "road.highway",
+            "elementType": "all",
+            "stylers": [
+              {
+                "visibility": "simplified"
+              }
+            ]
+          },
+          {
+            "featureType": "road.arterial",
+            "elementType": "labels.icon",
+            "stylers": [
+              {
+                "visibility": "off"
+              }
+            ]
+          },
+          {
+            "featureType": "transit",
+            "elementType": "all",
+            "stylers": [
+              {
+                "visibility": "off"
+              }
+            ]
+          },
+          {
+            "featureType": "water",
+            "elementType": "all",
+            "stylers": [
+              {
+                "color": "#46bcec"
+              },
+              {
+                "visibility": "on"
+              }
+            ]
+          }
+        ]
+      });
+
+      // Ajout d'un marqueur
+      new google.maps.Marker({
+        position: casablanca,
+        map: map,
+        title: "Site OCP Casablanca"
+      });
+
+      // Vous pouvez ajouter d'autres marqueurs pour d'autres sites ici
+    }
+
+    // Gestion des erreurs de chargement de l'API Google Maps
+    window.gm_authFailure = function() {
+      const mapElement = document.getElementById("google-map");
+      mapElement.innerHTML = `
+        <div class="w-full h-full flex items-center justify-center bg-gray-100 rounded-lg">
+          <div class="text-center p-6">
+            <i class="fas fa-map-marked-alt text-5xl text-gray-400 mb-4"></i>
+            <h3 class="text-xl font-semibold text-gray-700 mb-2">Carte non disponible</h3>
+            <p class="text-gray-500">La carte n'a pas pu être chargée. Veuillez vérifier votre connexion internet.</p>
+          </div>
+        </div>
+      `;
+    };
+  </script>
+</body>
+</html>

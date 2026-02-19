@@ -1,0 +1,222 @@
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+    <h2 class="text-2xl font-bold dark:text-white">Détails Météo</h2>
+    
+    <div class="flex flex-col md:flex-row gap-3 w-full md:w-auto">
+      <div class="relative flex-grow">
+        <div class="flex">
+          <input type="text" [(ngModel)]="searchQuery" 
+                 placeholder="Rechercher une ville..." 
+                 class="w-full border rounded-l px-3 py-2 dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <button (click)="searchLocation()" 
+                  class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-r whitespace-nowrap transition-colors">
+            Rechercher
+          </button>
+        </div>
+        <div *ngIf="searchResults.length > 0" class="absolute z-10 mt-1 w-full bg-white dark:bg-gray-700 shadow-lg rounded-md max-h-60 overflow-auto border border-gray-200 dark:border-gray-600">
+          <div *ngFor="let result of searchResults" 
+               class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center"
+               (click)="selectLocation(result)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            {{ result.name }}, {{ result.country }}
+          </div>
+        </div>
+      </div>
+      
+      <button (click)="useCurrentLocation()" 
+              class="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white px-4 py-2 rounded-md whitespace-nowrap transition-colors flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+        </svg>
+        Ma position
+      </button>
+    </div>
+  </div>
+
+  <!-- Nouvelle barre de recherche par coordonnées -->
+  <div class="flex flex-col md:flex-row gap-3 w-full md:w-auto mt-4">
+    <div class="flex flex-col md:flex-row gap-2 w-full">
+      <input type="number" [(ngModel)]="searchLat" 
+             placeholder="Latitude" 
+             class="border rounded px-3 py-2 dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <input type="number" [(ngModel)]="searchLon" 
+             placeholder="Longitude" 
+             class="border rounded px-3 py-2 dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <button (click)="searchByCoordinates()" 
+              class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded whitespace-nowrap transition-colors">
+        Rechercher par coordonnées
+      </button>
+    </div>
+  </div>
+
+  <!-- Message d'erreur -->
+  <div *ngIf="errorMessage" class="mt-4 p-3 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-md">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="flex justify-center items-center py-12">
+    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+  </div>
+
+  <!-- Current Weather -->
+  <div *ngIf="!isLoading && currentWeather.temp !== undefined" class="mb-8 p-6 bg-gradient-to-r from-blue-50 to-blue-100 dark:from-gray-700 dark:to-gray-800 rounded-lg shadow">
+    <div class="flex flex-col md:flex-row items-center justify-between">
+      <div class="mb-4 md:mb-0">
+        <div class="flex items-center">
+          <h3 class="text-2xl font-bold dark:text-white">{{ selectedLocation }}</h3>
+          <button (click)="refreshWeather()" class="ml-2 text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+          </button>
+        </div>
+        <p class="text-lg font-semibold dark:text-gray-300">{{ currentWeather.condition }}</p>
+        <p class="text-5xl font-bold dark:text-white">{{ currentWeather.temp }}°C</p>
+        <p class="text-gray-600 dark:text-gray-300">Ressenti {{ currentWeather.feelsLike }}°C</p>
+      </div>
+      <div class="flex items-center">
+        <img [src]="currentWeather.icon" alt="Weather icon" class="w-24 h-24">
+        <div class="ml-6">
+          <p class="dark:text-white flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <span class="font-medium">Levé du soleil:</span> {{ sunrise | date:'HH:mm' }}
+          </p>
+          <p class="dark:text-white flex items-center mt-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+            <span class="font-medium">Couché du soleil:</span> {{ sunset | date:'HH:mm' }}
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+      <div class="bg-white/70 dark:bg-gray-600/80 p-4 rounded-lg shadow-sm backdrop-blur-sm">
+        <div class="flex items-center justify-center mb-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          <p class="text-gray-500 dark:text-gray-300">Vent</p>
+        </div>
+        <p class="text-xl font-bold text-center dark:text-white">{{ weatherDetails.wind.speed }} km/h</p>
+        <p class="text-sm text-center text-gray-500 dark:text-gray-400">{{ weatherDetails.wind.direction }}</p>
+      </div>
+      <div class="bg-white/70 dark:bg-gray-600/80 p-4 rounded-lg shadow-sm backdrop-blur-sm">
+        <div class="flex items-center justify-center mb-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <p class="text-gray-500 dark:text-gray-300">Humidité</p>
+        </div>
+        <p class="text-xl font-bold text-center dark:text-white">{{ weatherDetails.humidity }}%</p>
+      </div>
+      <div class="bg-white/70 dark:bg-gray-600/80 p-4 rounded-lg shadow-sm backdrop-blur-sm">
+        <div class="flex items-center justify-center mb-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+          </svg>
+          <p class="text-gray-500 dark:text-gray-300">Pression</p>
+        </div>
+        <p class="text-xl font-bold text-center dark:text-white">{{ weatherDetails.pressure }} hPa</p>
+      </div>
+      <div class="bg-white/70 dark:bg-gray-600/80 p-4 rounded-lg shadow-sm backdrop-blur-sm">
+        <div class="flex items-center justify-center mb-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+          <p class="text-gray-500 dark:text-gray-300">Visibilité</p>
+        </div>
+        <p class="text-xl font-bold text-center dark:text-white">{{ weatherDetails.visibility / 1000 }} km</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Daily Forecast -->
+  <div *ngIf="dailyForecast && dailyForecast.length > 0">
+    <h3 class="text-xl font-semibold mb-4 dark:text-white flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
+      Prévisions sur 6 jours
+    </h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4 mb-8">
+      <div *ngFor="let day of dailyForecast" class="bg-white/70 dark:bg-gray-700/90 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow backdrop-blur-sm">
+        <p class="font-medium text-center dark:text-white">{{ day.day }}</p>
+        <p class="text-xs text-center text-gray-500 dark:text-gray-400">{{ day.date | date:'dd/MM' }}</p>
+        <div class="flex justify-center my-2">
+          <img [src]="day.icon" alt="Weather icon" class="w-12 h-12">
+        </div>
+        <div class="flex justify-between text-sm">
+          <span class="text-blue-600 dark:text-blue-400 font-medium">{{ day.minTemp }}°</span>
+          <span class="text-red-600 dark:text-red-400 font-medium">{{ day.maxTemp }}°</span>
+        </div>
+        <p class="text-xs text-center text-gray-600 dark:text-gray-400 mt-2">{{ day.condition }}</p>
+        <div class="flex items-center justify-center mt-2 text-xs text-gray-600 dark:text-gray-400" *ngIf="day.precipitation > 0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+          {{ day.precipitation }}%
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hourly Forecast -->
+  <div *ngIf="hourlyForecast && hourlyForecast.length > 0">
+    <h3 class="text-xl font-semibold mb-4 dark:text-white flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      Prévisions horaires
+    </h3>
+    <div class="overflow-x-auto pb-2">
+      <div class="flex space-x-4 min-w-max pb-2">
+        <div *ngFor="let hour of hourlyForecast" class="bg-white/70 dark:bg-gray-700/90 p-3 rounded-lg shadow-sm backdrop-blur-sm min-w-24 text-center">
+          <p class="font-medium dark:text-white">{{ hour.time | date:'HH:mm' }}</p>
+          <div class="flex justify-center my-2">
+            <img [src]="hour.icon" alt="Weather icon" class="w-10 h-10">
+          </div>
+          <p class="text-lg font-bold dark:text-white">{{ hour.temp }}°C</p>
+          <div class="flex items-center justify-center mt-2 text-xs text-gray-600 dark:text-gray-400" *ngIf="hour.precipitation > 0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+            {{ hour.precipitation }}%
+          </div>
+          <div class="flex items-center justify-center mt-1 text-xs text-gray-600 dark:text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            {{ hour.windSpeed }} km/h
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weather Map -->
+  <div class="mt-8">
+    <h3 class="text-xl font-semibold mb-4 dark:text-white flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+      </svg>
+      Carte météorologique
+    </h3>
+    <div class="h-64 md:h-96 rounded-lg overflow-hidden shadow-md border border-gray-200 dark:border-gray-700">
+      <div #mapContainer class="h-full w-full"></div>
+    </div>
+    <div class="flex justify-center mt-3">
+      <button (click)="focusOnMorocco()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
+        Centrer sur le Maroc
+      </button>
+    </div>
+  </div>
+</div>

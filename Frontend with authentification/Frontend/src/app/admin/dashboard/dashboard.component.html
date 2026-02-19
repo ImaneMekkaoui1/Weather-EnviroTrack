@@ -1,0 +1,447 @@
+<div class="flex h-screen bg-gray-50">
+  <!-- Sidebar améliorée -->
+  <aside class="fixed inset-y-0 left-0 z-30 w-64 bg-gradient-to-b from-blue-800 to-blue-900 text-white shadow-xl">
+    <!-- Logo -->
+    <div class="flex items-center justify-center h-16 px-4 border-b border-blue-700">
+      <div class="flex items-center space-x-2">
+        <svg class="w-8 h-8 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+        <span class="text-xl font-bold text-white">Weather&EnviroTrack</span>
+      </div>
+    </div>
+  
+    <!-- Menu Navigation amélioré -->
+    <nav class="flex flex-col p-4 space-y-1">
+      <!-- Dashboard -->
+      <a 
+        routerLink="/admin/dashboard" 
+        routerLinkActive="bg-blue-700 bg-opacity-25 border-l-4 border-blue-400"
+        class="flex items-center px-4 py-3 rounded-lg hover:bg-blue-700 hover:bg-opacity-25 transition-colors duration-200"
+      >
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+        <span>Dashboard</span>
+      </a>
+  
+      <!-- Gestion Utilisateurs -->
+      <a 
+        routerLink="/admin/manage-users" 
+        routerLinkActive="bg-blue-700 bg-opacity-25 border-l-4 border-blue-400"
+        class="flex items-center px-4 py-3 rounded-lg hover:bg-blue-700 hover:bg-opacity-25 transition-colors duration-200"
+      >
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+        </svg>
+        <span>Gestion Utilisateurs</span>
+      </a>
+  
+      <!-- Gestion Capteurs -->
+      <a 
+        routerLink="/admin/manage-sensors" 
+        routerLinkActive="bg-blue-700 bg-opacity-25 border-l-4 border-blue-400"
+        class="flex items-center px-4 py-3 rounded-lg hover:bg-blue-700 hover:bg-opacity-25 transition-colors duration-200"
+      >
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+        </svg>
+        <span>Gestion Capteurs</span>
+      </a>
+  
+      <!-- Qualité de l'Air -->
+      <a 
+        routerLink="../../air-quality" 
+        routerLinkActive="bg-blue-700 bg-opacity-25 border-l-4 border-blue-400"
+        class="flex items-center px-4 py-3 rounded-lg hover:bg-blue-700 hover:bg-opacity-25 transition-colors duration-200"
+      >
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+        </svg>
+        <span>Qualité de l'Air</span>
+      </a>
+  
+      <!-- Gestion Alertes -->
+      <a 
+        routerLink="/admin/manage-alerts" 
+        routerLinkActive="bg-blue-700 bg-opacity-25 border-l-4 border-blue-400"
+        class="flex items-center px-4 py-3 rounded-lg hover:bg-blue-700 hover:bg-opacity-25 transition-colors duration-200"
+      >
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016zM12 9v2m0 4h.01"/>
+        </svg>
+        <span>Gestion Alertes</span>
+      </a>
+  
+      <!-- Détails Météo -->
+      <a 
+        routerLink="/admin/weather" 
+        routerLinkActive="bg-blue-700 bg-opacity-25 border-l-4 border-blue-400"
+        class="flex items-center px-4 py-3 rounded-lg hover:bg-blue-700 hover:bg-opacity-25 transition-colors duration-200"
+      >
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+        </svg>
+        <span>Météo</span>
+      </a>
+      <!-- Seuils par saison -->
+      <a 
+        routerLink="../../SeasonalThresholds" 
+        routerLinkActive="bg-blue-700 bg-opacity-25 border-l-4 border-blue-400"
+        class="flex items-center px-4 py-3 rounded-lg hover:bg-blue-700 hover:bg-opacity-25 transition-colors duration-200"
+      >
+      <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+      </svg>
+        <span>Seuils par saison</span>
+      </a>
+    
+    
+      <!-- OCP Zone -->
+      <a 
+        routerLink="/admin/ocp-zone" 
+        routerLinkActive="bg-blue-700 bg-opacity-25 border-l-4 border-blue-400"
+        class="flex items-center px-4 py-3 rounded-lg hover:bg-blue-700 hover:bg-opacity-25 transition-colors duration-200"
+      >
+      <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      <span>ocp-zone</span>
+      </a>
+
+      <a 
+        routerLink="/admin/login-logs" 
+        routerLinkActive="bg-blue-700 bg-opacity-25 border-l-4 border-blue-400"
+        class="flex items-center px-4 py-3 rounded-lg hover:bg-blue-700 hover:bg-opacity-25 transition-colors duration-200"
+      >
+     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+      </svg>
+    <span>Login-Logs</span>
+    </a>
+</nav>
+    <!-- Bouton Déconnexion -->
+    <div class="absolute bottom-0 left-0 right-0 p-4">
+      <button 
+        (click)="logout()"
+        class="flex items-center w-full px-4 py-3 text-sm font-medium text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+      >
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+        </svg>
+        <span>Déconnexion</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Contenu principal -->
+  <div class="flex flex-col flex-1 ml-64">
+    <!-- Header Top -->
+    <header class="flex items-center justify-between h-16 px-6 bg-white shadow-sm">
+      <!-- Titre de la page -->
+      <h1 class="text-xl font-bold text-gray-800">Dashboard</h1>
+      
+      <!-- Actions et profil -->
+      <div class="flex items-center space-x-4">
+        
+        <!-- Bouton Notifications -->
+<div class="relative">
+  <button class="relative p-2 rounded-full hover:bg-gray-100" (click)="toggleNotifications()">
+    <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+    </svg>
+    <span *ngIf="unreadNotifications > 0" class="absolute top-0 right-0 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full">
+      {{unreadNotifications}}
+    </span>
+  </button>
+  
+  <!-- Panneau de notifications -->
+  <div *ngIf="showNotificationsPanel" class="absolute right-0 mt-2 w-96 bg-white rounded-lg shadow-xl z-50 border border-gray-200">
+    <!-- Header du panneau -->
+    <div class="p-4 border-b border-gray-200">
+      <div class="flex items-center justify-between">
+        <h3 class="text-lg font-medium text-gray-900">Notifications</h3>
+        <button (click)="toggleNotifications()" class="text-gray-400 hover:text-gray-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Liste des notifications système -->
+    <div class="max-h-96 overflow-y-auto">
+      <div *ngFor="let notification of systemNotifications" 
+           class="p-4 border-b last:border-b-0 hover:bg-gray-50"
+           [class]="getSystemNotificationColor(notification)">
+        <div class="flex items-start space-x-3">
+          <!-- Icône de notification -->
+          <span class="text-2xl">{{getSystemNotificationIcon(notification)}}</span>
+          
+          <div class="flex-1">
+            <!-- Message de la notification -->
+            <p class="text-sm text-gray-900">{{notification.message}}</p>
+            
+            <!-- Date de la notification -->
+            <p class="text-xs text-gray-500 mt-1">
+              {{notification.createdAt | date:'dd/MM/yyyy HH:mm'}}
+            </p>
+            
+            <!-- Actions pour les notifications de type NEW_USER -->
+            <div *ngIf="notification.type === 'NEW_USER' && notification.status === 'UNREAD'" 
+                 class="mt-2 flex space-x-2">
+              <button (click)="approveUserFromDashboard(notification)"
+                      class="px-3 py-1 text-xs font-medium text-white bg-green-600 rounded hover:bg-green-700">
+                Approuver
+              </button>
+              <button (click)="rejectUserFromDashboard(notification)"
+                      class="px-3 py-1 text-xs font-medium text-white bg-red-600 rounded hover:bg-red-700">
+                Rejeter
+              </button>
+            </div>
+          </div>
+          
+          <!-- Statut de lecture -->
+          <div *ngIf="notification.status === 'UNREAD'"
+               (click)="markNotificationAsRead(notification)"
+               class="w-2 h-2 bg-blue-600 rounded-full cursor-pointer">
+          </div>
+        </div>
+      </div>
+      
+      <!-- Message si aucune notification -->
+      <div *ngIf="systemNotifications.length === 0" class="p-4 text-center text-gray-500">
+        Aucune notification
+      </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="p-3 border-t border-gray-200">
+      <a href="javascript:void(0)" (click)="viewAllNotifications()" 
+         class="block text-center text-sm font-medium text-blue-600 hover:text-blue-800">
+        Voir toutes les notifications
+      </a>
+    </div>
+  </div>
+</div>
+        
+        <!-- Dernière mise à jour -->
+        <div class="text-sm text-gray-500">
+          <span>Dernière mise à jour: {{lastUpdate | date:'HH:mm:ss'}}</span>
+        </div>
+        
+        <!-- Profil utilisateur -->
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 text-white">
+            {{currentUser.initials}}
+          </div>
+          <div class="text-sm">
+            <div class="font-medium text-gray-700">{{currentUser.name}}</div>
+            <div class="text-xs text-gray-500">{{currentUser.role}}</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Contenu principal scrollable -->
+    <main class="flex-1 p-6 overflow-y-auto">
+      <!-- Statistiques principales -->
+      <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-2 xl:grid-cols-4">
+        <!-- Utilisateurs actifs -->
+        <div class="overflow-hidden bg-white rounded-lg shadow-sm">
+          <div class="p-5">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium text-gray-500">Utilisateurs actifs</div>
+                <div class="text-2xl font-bold text-gray-900">{{stats.activeSensors}}</div>
+                <div class="flex items-center mt-1">
+                  <span [class]="stats.sensorsChange >= 0 ? 'text-green-500' : 'text-red-500'">
+                    <span *ngIf="stats.sensorsChange >= 0">+</span>{{stats.sensorsChange}}%
+                  </span>
+                  <span class="ml-1 text-xs text-gray-500">depuis hier</span>
+                </div>
+              </div>
+              <div class="w-20 h-20">
+                <canvas id="usersChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Capteurs actifs -->
+        <div class="overflow-hidden bg-white rounded-lg shadow-sm">
+          <div class="p-5">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium text-gray-500">Capteurs actifs</div>
+                <div class="text-2xl font-bold text-gray-900">{{stats.activeSensors}}</div>
+                <div class="flex items-center mt-1">
+                  <span [class]="stats.sensorsChange >= 0 ? 'text-green-500' : 'text-red-500'">
+                    <span *ngIf="stats.sensorsChange >= 0">+</span>{{stats.sensorsChange}}%
+                  </span>
+                  <span class="ml-1 text-xs text-gray-500">depuis hier</span>
+                </div>
+              </div>
+              <div class="w-20 h-20">
+                <canvas id="sensorsChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Alertes mensuelles -->
+        <div class="overflow-hidden bg-white rounded-lg shadow-sm">
+          <div class="p-5">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium text-gray-500">Alertes mensuelles</div>
+                <div class="text-2xl font-bold text-gray-900">{{stats.monthlyAlerts}}</div>
+                <div class="flex items-center mt-1">
+                  <span [class]="stats.alertsChange >= 0 ? 'text-yellow-500' : 'text-green-500'">
+                    <span *ngIf="stats.alertsChange >= 0">+</span>{{stats.alertsChange}}%
+                  </span>
+                  <span class="ml-1 text-xs text-gray-500">depuis le mois dernier</span>
+                </div>
+              </div>
+              <div class="w-20 h-20">
+                <canvas id="alertsChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Points de données -->
+        <div class="overflow-hidden bg-white rounded-lg shadow-sm">
+          <div class="p-5">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium text-gray-500">Points de données</div>
+                <div class="text-2xl font-bold text-gray-900">{{stats.dataPoints | number}}</div>
+                <div class="flex items-center mt-1">
+                  <span [class]="stats.dataPointsChange >= 0 ? 'text-green-500' : 'text-red-500'">
+                    <span *ngIf="stats.dataPointsChange >= 0">+</span>{{stats.dataPointsChange}}%
+                  </span>
+                  <span class="ml-1 text-xs text-gray-500">depuis hier</span>
+                </div>
+              </div>
+              <div class="w-20 h-20">
+                <canvas id="dataChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Principale grille de contenu -->
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <!-- Qualité de l'air -->
+        <div class="bg-white rounded-lg shadow-sm">
+          <div class="flex items-center justify-between p-5 border-b">
+            <h2 class="text-lg font-medium text-gray-800">Qualité de l'air</h2>
+            <div class="px-3 py-1 rounded-full" [class]="getAirQualityStatus().color">
+              <span class="text-xs font-medium text-white">{{getAirQualityStatus().text}}</span>
+            </div>
+          </div>
+          <div class="p-5">
+            <div class="h-60">
+              <canvas id="airQualityChart"></canvas>
+            </div>
+          </div>
+        </div>  
+        
+        <!-- Activité récente -->
+        <div class="bg-white rounded-lg shadow-sm">
+          <div class="flex items-center justify-between p-5 border-b">
+            <h2 class="text-lg font-medium text-gray-800">Activité récente</h2>
+            <button class="px-3 py-1 text-sm text-blue-600 hover:text-blue-800">Voir tout</button>
+          </div>
+          <div class="p-5">
+            <div class="h-60">
+              <canvas id="activityChart"></canvas>
+            </div>
+            <div class="mt-6">
+              <h3 class="mb-3 text-sm font-medium text-gray-500">État des capteurs</h3>
+              <div class="flex items-center justify-between mb-1">
+                <div class="text-sm text-gray-700">En ligne</div>
+                <div class="text-sm font-medium text-gray-900">{{sensorStatus.online}}</div>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="bg-green-500 h-2.5 rounded-full" [style.width]="(sensorStatus.online / (sensorStatus.online + sensorStatus.offline + sensorStatus.maintenance) * 100) + '%'"></div>
+              </div>
+              <div class="flex items-center justify-between mt-2 mb-1">
+                <div class="text-sm text-gray-700">Hors ligne</div>
+                <div class="text-sm font-medium text-gray-900">{{sensorStatus.offline}}</div>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="bg-red-500 h-2.5 rounded-full" [style.width]="(sensorStatus.offline / (sensorStatus.online + sensorStatus.offline + sensorStatus.maintenance) * 100) + '%'"></div>
+              </div>
+              <div class="flex items-center justify-between mt-2 mb-1">
+                <div class="text-sm text-gray-700">En maintenance</div>
+                <div class="text-sm font-medium text-gray-900">{{sensorStatus.maintenance}}</div>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="bg-yellow-500 h-2.5 rounded-full" [style.width]="(sensorStatus.maintenance / (sensorStatus.online + sensorStatus.offline + sensorStatus.maintenance) * 100) + '%'"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Alertes récentes -->
+      <div class="mt-6 bg-white rounded-lg shadow-sm">
+        <div class="flex items-center justify-between p-5 border-b">
+          <h2 class="text-lg font-medium text-gray-800">Alertes récentes</h2>
+          <a routerLink="/admin/manage-alerts" class="px-3 py-1 text-sm text-blue-600 hover:text-blue-800">Voir toutes les alertes</a>
+        </div>
+        <div class="p-5">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left text-gray-500">
+              <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                  <th scope="col" class="px-6 py-3">Titre</th>
+                  <th scope="col" class="px-6 py-3">Message</th>
+                  <th scope="col" class="px-6 py-3">Sévérité</th>
+                  <th scope="col" class="px-6 py-3">Date</th>
+                  <th scope="col" class="px-6 py-3">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let alert of recentAlerts" class="bg-white border-b">
+                  <td class="px-6 py-4 font-medium text-gray-900">{{alert.title}}</td>
+                  <td class="px-6 py-4">{{alert.message}}</td>
+                  <td class="px-6 py-4">
+                    <span class="px-2 py-1 text-xs font-medium rounded-full" 
+                      [class]="alert.severity === 'high' ? 'bg-red-100 text-red-800' : 
+                               alert.severity === 'medium' ? 'bg-yellow-100 text-yellow-800' : 
+                               'bg-green-100 text-green-800'">
+                      {{alert.severity}}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4">{{alert.timestamp | date:'dd/MM/yyyy HH:mm'}}</td>
+                  <td class="px-6 py-4">
+                    <button class="text-blue-600 hover:text-blue-900" (click)="viewAlertDetails(alert)">
+                      Détails
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="recentAlerts.length === 0" class="bg-white border-b">
+                  <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                    Aucune alerte récente
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Actions rapides -->
+     
+    </main>
+    
+    <!-- Footer -->
+    <footer class="py-4 px-6 bg-white border-t text-center text-sm text-gray-600">
+      <p>© 2025 Weather&EnviroTrack. Tous droits réservés.</p>
+    </footer>
+  </div>
+</div>

@@ -1,0 +1,367 @@
+<!-- Main Container -->
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-4">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">Comparaison des Services Météo</h1>
+      <p class="text-gray-600">Comparez les données d'OpenWeather et de WeatherAPI pour déterminer le service le plus fiable.</p>
+      
+      <!-- Search Form -->
+      <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="mt-6 flex flex-col sm:flex-row gap-3">
+        <div class="flex-grow">
+          <input 
+            type="text" 
+            formControlName="cityName" 
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            placeholder="Entrez le nom d'une ville..."
+          />
+          <div *ngIf="searchForm.get('cityName')?.invalid && searchForm.get('cityName')?.touched" 
+               class="text-red-500 text-sm mt-1">
+            Veuillez entrer un nom de ville valide (minimum 2 caractères)
+          </div>
+        </div>
+        <button 
+          type="submit" 
+          class="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors"
+          [disabled]="searchForm.invalid || loading">
+          <span *ngIf="!loading">Rechercher</span>
+          <svg *ngIf="loading" class="animate-spin h-5 w-5 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        </button>
+        <button 
+          type="button" 
+          (click)="refreshData()"
+          class="px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+        </button>
+      </form>
+      
+      <!-- Quick access cities -->
+      <div class="mt-4">
+        <h3 class="text-sm font-medium text-gray-700 mb-2">Villes populaires:</h3>
+        <div class="flex flex-wrap gap-2">
+          <button 
+            *ngFor="let city of recentCities" 
+            (click)="selectCity(city)" 
+            class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-full transition-colors">
+            {{ city }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="bg-white rounded-xl shadow-lg mb-6">
+      <div class="border-b border-gray-200">
+        <nav class="flex -mb-px">
+          <button 
+            (click)="switchTab('current')"
+            [class.border-blue-500]="selectedTab === 'current'"
+            [class.text-blue-600]="selectedTab === 'current'"
+            class="flex-1 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors">
+            Météo Actuelle
+          </button>
+          <button 
+            (click)="switchTab('forecast')"
+            [class.border-blue-500]="selectedTab === 'forecast'"
+            [class.text-blue-600]="selectedTab === 'forecast'"
+            class="flex-1 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors">
+            Prévisions 6 Jours
+          </button>
+          <button 
+            (click)="switchTab('history')"
+            [class.border-blue-500]="selectedTab === 'history'"
+            [class.text-blue-600]="selectedTab === 'history'"
+            class="flex-1 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors">
+            Historique
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Current Weather Tab -->
+    <div *ngIf="selectedTab === 'current' && comparison && !loading && !comparison.error" class="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
+      <!-- Header -->
+      <div class="bg-gradient-to-r from-blue-500 to-blue-700 text-white p-6">
+        <div class="flex justify-between items-center">
+          <h2 class="text-2xl font-bold">{{ comparison.city }}</h2>
+          <div class="text-sm">
+            {{ comparison.timestamp | date:'dd/MM/yyyy HH:mm' }}
+          </div>
+        </div>
+      </div>
+      
+      <!-- Comparison Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+        <!-- OpenWeather Card -->
+        <div class="bg-blue-50 rounded-xl p-6 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-bold text-blue-800">OpenWeather</h3>
+            <div class="flex items-center bg-blue-100 px-3 py-1 rounded-full">
+              <span class="text-blue-800 font-medium">Score: {{ accuracy.openWeather }}%</span>
+            </div>
+          </div>
+          
+          <div class="space-y-4">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700">Température:</span>
+              <span class="font-medium text-lg">{{ comparison.openWeather.temperature }}°C</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700">Ressenti:</span>
+              <span class="font-medium">{{ comparison.openWeather.feelsLike }}°C</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700">Humidité:</span>
+              <span class="font-medium">{{ comparison.openWeather.humidity }}%</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700">Pression:</span>
+              <span class="font-medium">{{ comparison.openWeather.pressure }} hPa</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700">Vitesse du vent:</span>
+              <span class="font-medium">{{ comparison.openWeather.windSpeed }} m/s</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700">Météo:</span>
+              <span class="font-medium">{{ comparison.openWeather.description }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- WeatherAPI Card -->
+        <div class="bg-indigo-50 rounded-xl p-6 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-bold text-indigo-800">WeatherAPI</h3>
+            <div class="flex items-center bg-indigo-100 px-3 py-1 rounded-full">
+              <span class="text-indigo-800 font-medium">Score: {{ accuracy.weatherApi }}%</span>
+            </div>
+          </div>
+          
+          <div class="space-y-4">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700">Température:</span>
+              <span class="font-medium text-lg">{{ comparison.weatherApi.temperature }}°C</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700">Ressenti:</span>
+              <span class="font-medium">{{ comparison.weatherApi.feelsLike }}°C</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700">Humidité:</span>
+              <span class="font-medium">{{ comparison.weatherApi.humidity }}%</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700">Pression:</span>
+              <span class="font-medium">{{ comparison.weatherApi.pressure }} hPa</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700">Vitesse du vent:</span>
+              <span class="font-medium">{{ comparison.weatherApi.windSpeed }} m/s</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700">Météo:</span>
+              <span class="font-medium">{{ comparison.weatherApi.description }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Differences Table -->
+      <div class="p-6 pt-0">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Analyse des différences</h3>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Paramètre</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">OpenWeather</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">WeatherAPI</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Différence</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Température</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comparison.openWeather.temperature }}°C</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comparison.weatherApi.temperature }}°C</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm" [ngClass]="getDifferenceClass(comparison.differences.temperature)">
+                  {{ comparison.differences.temperature > 0 ? '+' : '' }}{{ comparison.differences.temperature }}°C
+                </td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Ressenti</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comparison.openWeather.feelsLike }}°C</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comparison.weatherApi.feelsLike }}°C</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm" [ngClass]="getDifferenceClass(comparison.differences.feelsLike)">
+                  {{ comparison.differences.feelsLike > 0 ? '+' : '' }}{{ comparison.differences.feelsLike }}°C
+                </td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Humidité</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comparison.openWeather.humidity }}%</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comparison.weatherApi.humidity }}%</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm" [ngClass]="getDifferenceClass(comparison.differences.humidity)">
+                  {{ comparison.differences.humidity > 0 ? '+' : '' }}{{ comparison.differences.humidity }}%
+                </td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Pression</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comparison.openWeather.pressure }} hPa</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comparison.weatherApi.pressure }} hPa</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm" [ngClass]="getDifferenceClass(comparison.differences.pressure / 10)">
+                  {{ comparison.differences.pressure > 0 ? '+' : '' }}{{ comparison.differences.pressure }} hPa
+                </td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Vitesse du vent</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comparison.openWeather.windSpeed }} m/s</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comparison.weatherApi.windSpeed }} m/s</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm" [ngClass]="getDifferenceClass(comparison.differences.windSpeed)">
+                  {{ comparison.differences.windSpeed > 0 ? '+' : '' }}{{ comparison.differences.windSpeed }} m/s
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forecast Tab -->
+    <div *ngIf="selectedTab === 'forecast' && forecasts.length > 0" class="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
+      <div class="bg-gradient-to-r from-blue-500 to-blue-700 text-white p-6">
+        <h2 class="text-2xl font-bold">Prévisions sur 6 jours</h2>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+        <div *ngFor="let forecast of forecasts" class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+          <div class="text-center mb-4">
+            <h3 class="text-lg font-semibold text-gray-800">{{ forecast.date | date:'EEEE d MMMM' }}</h3>
+          </div>
+          
+          <div class="space-y-4">
+            <!-- OpenWeather -->
+            <div class="bg-blue-50 rounded-lg p-3">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-medium text-blue-800">OpenWeather</span>
+                <span class="text-sm font-medium text-blue-800">Score: {{ forecast.accuracy.openWeather }}%</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Température:</span>
+                <span class="font-medium">{{ forecast.openWeather.temperature }}°C</span>
+              </div>
+              <div class="text-sm text-gray-600 mt-1">{{ forecast.openWeather.description }}</div>
+            </div>
+            
+            <!-- WeatherAPI -->
+            <div class="bg-indigo-50 rounded-lg p-3">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-medium text-indigo-800">WeatherAPI</span>
+                <span class="text-sm font-medium text-indigo-800">Score: {{ forecast.accuracy.weatherApi }}%</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Température:</span>
+                <span class="font-medium">{{ forecast.weatherApi.temperature }}°C</span>
+              </div>
+              <div class="text-sm text-gray-600 mt-1">{{ forecast.weatherApi.description }}</div>
+            </div>
+            
+            <!-- Actual -->
+            <div class="bg-green-50 rounded-lg p-3">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-medium text-green-800">Température Réelle</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Température:</span>
+                <span class="font-medium">{{ forecast.actual.temperature }}°C</span>
+              </div>
+              <div class="text-sm text-gray-600 mt-1">{{ forecast.actual.description }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- History Tab -->
+    <div *ngIf="selectedTab === 'history' && historicalData.length > 0" class="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
+      <div class="bg-gradient-to-r from-blue-500 to-blue-700 text-white p-6">
+        <h2 class="text-2xl font-bold">Historique des Prévisions</h2>
+        <p class="text-sm text-blue-100 mt-1">Analyse de la fiabilité des services sur {{ historicalData.length }} jours</p>
+      </div>
+      
+      <!-- Average Accuracy -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+        <div class="bg-blue-50 rounded-xl p-6">
+          <h3 class="text-lg font-semibold text-blue-800 mb-2">OpenWeather</h3>
+          <div class="text-3xl font-bold text-blue-600">{{ getAverageAccuracy('openWeather') }}%</div>
+          <p class="text-sm text-blue-600 mt-1">Précision moyenne</p>
+        </div>
+        
+        <div class="bg-indigo-50 rounded-xl p-6">
+          <h3 class="text-lg font-semibold text-indigo-800 mb-2">WeatherAPI</h3>
+          <div class="text-3xl font-bold text-indigo-600">{{ getAverageAccuracy('weatherApi') }}%</div>
+          <p class="text-sm text-indigo-600 mt-1">Précision moyenne</p>
+        </div>
+      </div>
+      
+      <!-- Historical Data Table -->
+      <div class="p-6 pt-0">
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ville</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">OpenWeather</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">WeatherAPI</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Réel</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr *ngFor="let entry of historicalData.slice(0, 10)">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {{ entry.date | date:'dd/MM/yyyy' }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {{ entry.city }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {{ entry.openWeather.temperature }}°C ({{ entry.accuracy.openWeather }}%)
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {{ entry.weatherApi.temperature }}°C ({{ entry.accuracy.weatherApi }}%)
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {{ entry.actual.temperature }}°C
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="bg-white rounded-xl shadow-lg p-8 mb-6 flex items-center justify-center">
+      <div class="flex flex-col items-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <p class="mt-4 text-gray-600">Récupération des données météo...</p>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="comparison?.error" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-6">
+      <div class="flex">
+        <svg class="h-6 w-6 text-red-500 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p>{{ comparison?.error || 'Une erreur est survenue' }}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,105 @@
+/* Google Maps Info Window Styles */
+.info-window {
+  font-family: 'Roboto', sans-serif;
+  min-width: 250px;
+  max-width: 300px;
+  padding: 12px;
+  color: #333;
+}
+
+.info-window h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1a365d;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+}
+
+.info-window h4 {
+  margin: 12px 0 6px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2d3748;
+}
+
+.info-window p {
+  margin: 4px 0;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.info-window strong {
+  font-weight: 500;
+}
+
+.weather-section, 
+.air-quality-section {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #eee;
+}
+
+.alerts-section {
+  margin-top: 8px;
+  padding: 8px;
+  background-color: #fff3f3;
+  border-radius: 4px;
+}
+
+.alerts-section h4 {
+  color: #d32f2f;
+}
+
+.alerts-section ul {
+  margin: 4px 0 0 0;
+  padding-left: 20px;
+}
+
+.alerts-section li {
+  font-size: 12px;
+  color: #d32f2f;
+  margin-bottom: 2px;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 3px solid #fff;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Zone Card Animations */
+.bg-white {
+  transition: all 0.3s ease;
+}
+
+.bg-white:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .info-window {
+    min-width: 200px;
+    max-width: 250px;
+    padding: 8px;
+  }
+  
+  .info-window h3 {
+    font-size: 14px;
+  }
+  
+  .info-window p {
+    font-size: 12px;
+  }
+}

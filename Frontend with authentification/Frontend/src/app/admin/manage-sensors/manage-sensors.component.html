@@ -1,0 +1,394 @@
+<!-- Composant de gestion des capteurs -->
+<div class="container mx-auto p-4">
+  <!-- Notifications -->
+  <div class="fixed top-4 right-4 z-50 space-y-2 w-80">
+    <div *ngFor="let alert of alerts" 
+         [ngClass]="{
+           'bg-green-100 text-green-800': alert.severity === 'info',
+           'bg-blue-100 text-blue-800': alert.severity === 'info',
+           'bg-yellow-100 text-yellow-800': alert.severity === 'warning',
+           'bg-red-100 text-red-800': alert.severity === 'danger'
+         }"
+         class="p-4 rounded-lg shadow-lg border-l-4"
+         [class.border-green-500]="alert.severity === 'info'"
+         [class.border-blue-500]="alert.severity === 'info'"
+         [class.border-yellow-500]="alert.severity === 'warning'"
+         [class.border-red-500]="alert.severity === 'danger'">
+      <div class="flex justify-between items-start">
+        <div class="flex-1">
+          <p class="font-medium">{{ alert.message }}</p>
+          <p class="text-sm mt-1">{{ alert.details }}</p>
+        </div>
+        <button (click)="removeAlert(alert)" class="ml-2 text-gray-500 hover:text-gray-700">
+          &times;
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- En-tête avec statut de connexion -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Gestion des Capteurs</h1>
+    <div class="flex items-center">
+      <span class="mr-2">Statut:</span>
+      <div class="flex items-center">
+        <span *ngIf="isConnected" class="inline-flex items-center px-3 py-1 bg-green-100 text-green-800 rounded-full">
+          <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+          Connecté
+        </span>
+        <span *ngIf="!isConnected" class="inline-flex items-center px-3 py-1 bg-red-100 text-red-800 rounded-full">
+          <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+          Déconnecté
+        </span>
+        <button *ngIf="!isConnected" (click)="reconnect()" class="ml-2 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
+          Reconnecter
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tableau des capteurs -->
+  <div class="bg-white rounded-lg shadow mb-6 overflow-hidden">
+    <div class="flex justify-between items-center p-4 bg-gray-50 border-b">
+      <h2 class="text-lg font-semibold">Liste des Capteurs</h2>
+      <div class="flex space-x-2">
+        <button (click)="exportToExcel()" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+          </svg>
+          Exporter
+        </button>
+        <label class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          Importer
+          <input type="file" accept=".xlsx, .xls, .csv" (change)="importFromExcel($event)" class="hidden">
+        </label>
+        <button (click)="openAddSensorModal()" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+          Ajouter un capteur
+        </button>
+      </div>
+    </div>
+
+    <!-- Loader -->
+    <div *ngIf="loading" class="p-6 text-center">
+      <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-500 border-r-transparent"></div>
+      <p class="mt-2">Chargement des capteurs...</p>
+    </div>
+
+    <!-- Message d'erreur -->
+    <div *ngIf="error" class="p-4 bg-red-100 text-red-700 border-l-4 border-red-500">
+      {{ error }}
+    </div>
+
+    <!-- Tableau -->
+    <div *ngIf="!loading && !error && sensors.length" class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Localisation</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let sensor of sensors" class="hover:bg-gray-50">
+            <td class="px-6 py-4 font-medium text-gray-900">{{ sensor.name }}</td>
+            <td class="px-6 py-4 text-gray-500">{{ sensor.type }}</td>
+            <td class="px-6 py-4 text-gray-500">
+              <span *ngIf="sensor.isMapLocation" class="cursor-pointer text-blue-500 hover:underline" 
+                    (click)="showLocationOnMap(sensor)">
+                Voir sur la carte
+              </span>
+              <span *ngIf="!sensor.isMapLocation">{{ sensor.location }}</span>
+            </td>
+            <td class="px-6 py-4">
+              <span *ngIf="sensor.status === 'actif'" class="px-2 py-1 bg-green-100 text-green-800 rounded-full">Actif</span>
+              <span *ngIf="sensor.status === 'inactif'" class="px-2 py-1 bg-gray-100 text-gray-800 rounded-full">Inactif</span>
+              <span *ngIf="sensor.status === 'maintenance'" class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full">Maintenance</span>
+            </td>
+            <td class="px-6 py-4">
+              <div class="flex space-x-2">
+                <button (click)="editSensor(sensor)" 
+                        class="p-2 text-blue-500 hover:bg-blue-50 rounded relative group"
+                        title="Éditer">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                  </svg>
+                  <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                    Éditer
+                  </span>
+                </button>
+                <button (click)="openHistoryModal(sensor)" 
+                        class="p-2 text-purple-500 hover:bg-purple-50 rounded relative group"
+                        title="Historique">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                    Historique
+                  </span>
+                </button>
+                <button (click)="simulateSensorData(sensor.id)" 
+                        class="p-2 text-green-500 hover:bg-green-50 rounded relative group"
+                        title="Simuler">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                    Simuler
+                  </span>
+                </button>
+                <button (click)="deleteSensor(sensor.id)" 
+                        class="p-2 text-red-500 hover:bg-red-50 rounded relative group"
+                        title="Supprimer">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                    Supprimer
+                  </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pas de capteurs -->
+    <div *ngIf="!loading && !error && sensors.length === 0" class="p-6 text-center text-gray-500">
+      Aucun capteur trouvé. Veuillez ajouter un capteur pour commencer.
+    </div>
+  </div>
+
+  <!-- Modal pour ajouter/modifier un capteur -->
+  <div *ngIf="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-medium">{{ editMode ? 'Modifier le capteur' : 'Ajouter un capteur' }}</h3>
+        <button (click)="closeModal()" class="text-gray-500 hover:text-gray-700">
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <form (ngSubmit)="saveSensor()" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Nom</label>
+          <input type="text" [(ngModel)]="currentSensor.name" name="name" 
+                 class="w-full px-3 py-2 border rounded-md" required>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+          <select [(ngModel)]="currentSensor.type" name="type" class="w-full px-3 py-2 border rounded-md" required>
+            <option value="temperature">Température</option>
+            <option value="humidity">Humidité</option>
+            <option value="air_quality">Qualité de l'air</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
+          <select [(ngModel)]="currentSensor.status" name="status" class="w-full px-3 py-2 border rounded-md" required>
+            <option value="actif">Actif</option>
+            <option value="inactif">Inactif</option>
+            <option value="maintenance">Maintenance</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Localisation</label>
+          <div class="flex space-x-4 mb-2">
+            <label class="inline-flex items-center">
+              <input type="radio" name="locationType" [value]="false" [(ngModel)]="currentSensor.isMapLocation" 
+                     class="form-radio text-blue-500">
+              <span class="ml-2">Texte</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="radio" name="locationType" [value]="true" [(ngModel)]="currentSensor.isMapLocation"
+                     class="form-radio text-blue-500"
+                     (change)="onCarteSelected()">
+              <span class="ml-2">Carte</span>
+            </label>
+          </div>
+          
+          <div *ngIf="!currentSensor.isMapLocation">
+            <input type="text" [(ngModel)]="currentSensor.location" name="location" 
+                   class="w-full px-3 py-2 border rounded-md" required>
+          </div>
+          
+          <div *ngIf="currentSensor.isMapLocation" style="height: 400px;">
+            <div id="location-map" style="height: 350px;"></div>
+            <div *ngIf="isMapLoading()">Initialisation de la carte...<br>Si la carte ne se charge pas, veuillez vérifier votre connexion internet et réessayer.</div>
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-3 pt-4">
+          <button type="button" (click)="closeModal()" 
+                  class="px-4 py-2 border rounded-md text-gray-700 hover:bg-gray-100">
+            Annuler
+          </button>
+          <button type="submit" 
+                  class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                  [disabled]="currentSensor.isMapLocation && !mapInitialized">
+            {{ editMode ? 'Mettre à jour' : 'Ajouter' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal pour afficher la carte -->
+  <div *ngIf="showMapModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-medium">Localisation du capteur: {{ selectedSensor?.name }}</h3>
+        <button (click)="closeMapModal()" class="text-gray-500 hover:text-gray-700">
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <div class="border rounded-md h-96 relative">
+        <div id="view-location-map" class="h-full w-full"></div>
+        <div *ngIf="selectedSensor?.coordinates" class="absolute bottom-2 left-2 bg-white p-2 rounded-md shadow-sm">
+          Position: {{ selectedSensor?.coordinates?.x | number:'1.4-4' }}, {{ selectedSensor?.coordinates?.y | number:'1.4-4' }}
+        </div>
+      </div>
+      
+      <div class="flex justify-end mt-4">
+        <button (click)="closeMapModal()" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal pour l'historique -->
+  <div *ngIf="showHistoryModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-medium">Historique du capteur: {{ selectedHistorySensor?.name }}</h3>
+        <button (click)="closeHistoryModal()" class="text-gray-500 hover:text-gray-700">
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <div *ngIf="!(selectedHistorySensor?.history?.length)" class="p-4 text-center text-gray-500">
+        Aucun historique disponible pour ce capteur.
+      </div>
+      
+      <div *ngIf="selectedHistorySensor?.history?.length" class="mb-4 border rounded-md overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Commentaire</th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let entry of selectedHistorySensor?.history; let i = index">
+              <td class="px-4 py-2 text-sm text-gray-500">{{ entry.date | date:'short' }}</td>
+              <td class="px-4 py-2 text-sm">
+                <span *ngIf="editingHistoryIndex !== i" [ngClass]="{
+                  'px-2 py-1 bg-green-100 text-green-800 rounded-full': entry.status === 'actif',
+                  'px-2 py-1 bg-gray-100 text-gray-800 rounded-full': entry.status === 'inactif',
+                  'px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full': entry.status === 'maintenance'
+                }">
+                  {{ entry.status === 'actif' ? 'Actif' : entry.status === 'inactif' ? 'Inactif' : 'Maintenance' }}
+                </span>
+                <select *ngIf="editingHistoryIndex === i" 
+                        [(ngModel)]="editingHistoryStatus" 
+                        class="px-2 py-1 border border-gray-300 rounded-md">
+                  <option value="actif">Actif</option>
+                  <option value="inactif">Inactif</option>
+                  <option value="maintenance">Maintenance</option>
+                </select>
+              </td>
+              <td class="px-4 py-2 text-sm text-gray-500">
+                <span *ngIf="editingHistoryIndex !== i">{{ entry.comment }}</span>
+                <textarea *ngIf="editingHistoryIndex === i" 
+                          [(ngModel)]="editingHistoryComment" 
+                          rows="2"
+                          class="w-full px-2 py-1 border border-gray-300 rounded-md"></textarea>
+              </td>
+              <td class="px-4 py-2 text-sm">
+                <div class="flex space-x-2" *ngIf="editingHistoryIndex !== i">
+                  <button (click)="editHistoryEntry(i)" class="text-blue-500 hover:text-blue-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                    </svg>
+                  </button>
+                  <button (click)="deleteHistoryEntry(i)" class="text-red-500 hover:text-red-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+                <div class="flex space-x-2" *ngIf="editingHistoryIndex === i">
+                  <button (click)="saveEditedHistoryEntry()" 
+                          [disabled]="!editingHistoryComment.trim()"
+                          class="text-green-500 hover:text-green-700 disabled:text-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                  <button (click)="cancelEditHistoryEntry()" class="text-gray-500 hover:text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+     
+      <div *ngIf="selectedHistorySensor" class="mt-4">
+        <h4 class="text-md font-medium mb-2">Ajouter une entrée d'historique</h4>
+        <textarea
+          [(ngModel)]="historyComment"
+          rows="3"
+          placeholder="Ajoutez un commentaire expliquant la raison du changement..."
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 mb-2">
+        </textarea>
+        <button
+          (click)="addHistoryEntry()"
+          [disabled]="!historyComment.trim()"
+          class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed">
+          Ajouter au journal
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de confirmation de suppression -->
+  <div *ngIf="showDeleteConfirmation" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+      <div class="mb-4">
+        <h3 class="text-lg font-medium text-red-600">Confirmer la suppression</h3>
+        <p class="mt-2 text-gray-600">Êtes-vous sûr de vouloir supprimer ce capteur ? Cette action est irréversible.</p>
+      </div>
+      <div class="flex justify-end space-x-3">
+        <button (click)="cancelDelete()" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100">
+          Annuler
+        </button>
+        <button (click)="confirmDelete()" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
+          Supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

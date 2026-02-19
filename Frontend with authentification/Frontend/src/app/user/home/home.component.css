@@ -1,0 +1,53 @@
+.gallery-card {
+  background: linear-gradient(to bottom right, #ffffff, #f7f7f7);
+  transition: all 0.3s ease;
+}
+
+.dark .gallery-card {
+  background: linear-gradient(to bottom right, #1f2937, #111827);
+}
+
+.gallery-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Add styles for the hero section slideshow */
+.hero-section {
+  transition: background-image 1.5s ease-in-out;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+/* Add a fade effect for the background overlay */
+.hero-overlay {
+  transition: opacity 1.5s ease-in-out;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2));
+}
+
+/* Ensure smooth transitions for all elements */
+* {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Add a fade effect for the hero content */
+.hero-content {
+  transition: opacity 1s ease-in-out;
+  opacity: 1;
+}
+
+.hero-content.fade {
+  opacity: 0;
+}

@@ -1,0 +1,27 @@
+.weather-marker-content {
+    color: #3b82f6;
+    font-size: 24px;
+    text-shadow: 0 0 3px white;
+  }
+  
+  .dark .weather-marker-content {
+    color: #93c5fd;
+    text-shadow: 0 0 3px #1e293b;
+  }
+  
+  #map {
+    z-index: 0;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+  }

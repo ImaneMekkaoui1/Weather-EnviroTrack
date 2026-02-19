@@ -1,0 +1,425 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-800">
+  <div class="container mx-auto px-6 py-8">
+    <!-- Header Section -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
+      <div class="space-y-1">
+        <h1 class="text-3xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-700 dark:from-white dark:via-blue-300 dark:to-indigo-300 bg-clip-text text-transparent flex items-center gap-3">
+          <div class="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl shadow-lg">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          Journalisation des Connexions
+        </h1>
+        <p class="text-slate-600 dark:text-slate-300 text-lg font-medium">Surveillance et analyse des connexions utilisateurs</p>
+      </div>
+      
+      <div class="flex gap-3">
+        <button 
+          (click)="refresh()" 
+          [disabled]="loading"
+          class="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 disabled:cursor-not-allowed transform hover:scale-105 disabled:transform-none"
+        >
+          <svg [class.animate-spin]="loading" class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+          Actualiser
+        </button>
+        
+        <button 
+          (click)="exportLogs()"
+          class="inline-flex items-center px-5 py-2.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold rounded-xl shadow-lg hover:shadow-xl border border-slate-200 dark:border-slate-600 transition-all duration-200 transform hover:scale-105"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+          Exporter
+        </button>
+        <button 
+          (click)="exportLogsPdf()"
+          class="inline-flex items-center px-5 py-2.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold rounded-xl shadow-lg hover:shadow-xl border border-slate-200 dark:border-slate-600 transition-all duration-200 transform hover:scale-105"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+          </svg>
+          Exporter PDF
+        </button>
+      </div>
+    </div>
+
+    <!-- Statistics Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div class="group relative bg-white dark:bg-slate-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-slate-100 dark:border-slate-700 hover:border-blue-200 dark:hover:border-blue-600 transform hover:-translate-y-1">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="relative flex items-center">
+          <div class="p-4 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg mr-5">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">{{ statistics.totalLogins | number }}</h3>
+            <p class="text-slate-600 dark:text-slate-300 font-medium">Total connexions</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="group relative bg-white dark:bg-slate-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-slate-100 dark:border-slate-700 hover:border-green-200 dark:hover:border-green-600 transform hover:-translate-y-1">
+        <div class="absolute inset-0 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="relative flex items-center">
+          <div class="p-4 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 shadow-lg mr-5">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">{{ statistics.successfulLogins | number }}</h3>
+            <p class="text-slate-600 dark:text-slate-300 font-medium">Connexions réussies</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="group relative bg-white dark:bg-slate-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-slate-100 dark:border-slate-700 hover:border-red-200 dark:hover:border-red-600 transform hover:-translate-y-1">
+        <div class="absolute inset-0 bg-gradient-to-br from-red-50 to-rose-50 dark:from-red-900/20 dark:to-rose-900/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="relative flex items-center">
+          <div class="p-4 rounded-2xl bg-gradient-to-br from-red-500 to-rose-600 shadow-lg mr-5">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">{{ statistics.failedLogins | number }}</h3>
+            <p class="text-slate-600 dark:text-slate-300 font-medium">Tentatives échouées</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="group relative bg-white dark:bg-slate-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-slate-100 dark:border-slate-700 hover:border-indigo-200 dark:hover:border-indigo-600 transform hover:-translate-y-1">
+        <div class="absolute inset-0 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="relative flex items-center">
+          <div class="p-4 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg mr-5">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">{{ statistics.uniqueUsersToday | number }}</h3>
+            <p class="text-slate-600 dark:text-slate-300 font-medium">Utilisateurs actifs aujourd'hui</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 mb-8 p-8">
+      <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-6 flex items-center gap-3">
+        <div class="p-2 bg-gradient-to-br from-slate-500 to-slate-600 rounded-xl">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+          </svg>
+        </div>
+        Filtres de recherche
+      </h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        <div class="space-y-2">
+          <label for="usernameFilter" class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Nom d'utilisateur</label>
+          <div class="relative">
+            <input 
+              type="text" 
+              id="usernameFilter"
+              class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 dark:focus:border-blue-400 transition-all duration-200 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 font-medium"
+              [(ngModel)]="usernameFilter"
+              placeholder="Rechercher par nom d'utilisateur..."
+            >
+            <button *ngIf="usernameFilter" (click)="clearFilter('username')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-red-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        
+        <div class="space-y-2">
+          <label for="statusFilter" class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Statut</label>
+          <div class="relative">
+            <select 
+              id="statusFilter" 
+              class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 dark:focus:border-blue-400 transition-all duration-200 text-slate-900 dark:text-white font-medium"
+              [(ngModel)]="statusFilter"
+            >
+              <option value="">Tous les statuts</option>
+              <option value="SUCCESS">Succès</option>
+              <option value="FAILURE">Échec</option>
+            </select>
+            <button *ngIf="statusFilter" (click)="clearFilter('status')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-red-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        
+        <div class="space-y-2">
+          <label for="startDateFilter" class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Date de début</label>
+          <div class="relative">
+            <input 
+              type="datetime-local" 
+              id="startDateFilter"
+              class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 dark:focus:border-blue-400 transition-all duration-200 text-slate-900 dark:text-white font-medium"
+              [(ngModel)]="startDateFilter"
+            >
+            <button *ngIf="startDateFilter" (click)="clearFilter('startDate')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-red-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        
+        <div class="space-y-2">
+          <label for="endDateFilter" class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Date de fin</label>
+          <div class="relative">
+            <input 
+              type="datetime-local" 
+              id="endDateFilter"
+              class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 dark:focus:border-blue-400 transition-all duration-200 text-slate-900 dark:text-white font-medium"
+              [(ngModel)]="endDateFilter"
+            >
+            <button *ngIf="endDateFilter" (click)="clearFilter('endDate')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-red-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flex justify-end gap-4">
+        <button 
+          (click)="clearFilters()"
+          class="inline-flex items-center px-6 py-3 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold rounded-xl transition-all duration-200 border border-slate-200 dark:border-slate-600 hover:shadow-lg transform hover:scale-105"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+          Effacer les filtres
+        </button>
+        
+        <button 
+          (click)="applyFilters()"
+          class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          Appliquer les filtres
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div *ngIf="loading" class="flex flex-col items-center justify-center py-20">
+      <div class="relative">
+        <div class="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+        <div class="absolute inset-0 w-16 h-16 border-4 border-transparent border-b-indigo-600 rounded-full animate-spin" style="animation-delay: 0.2s;"></div>
+      </div>
+      <p class="mt-6 text-lg text-slate-600 dark:text-slate-300 font-medium">Chargement des logs de connexion...</p>
+    </div>
+
+    <!-- Table Section -->
+    <div *ngIf="!loading" class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 overflow-hidden">
+      <div class="px-8 py-6 border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-slate-50 to-blue-50/50 dark:from-slate-800 dark:to-slate-700">
+        <div class="flex justify-between items-center">
+          <h3 class="text-xl font-bold text-slate-800 dark:text-white flex items-center gap-3">
+            <div class="p-2 bg-gradient-to-br from-slate-500 to-slate-600 rounded-xl">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+              </svg>
+            </div>
+            Historique des connexions
+          </h3>
+          <span class="px-4 py-2 bg-white dark:bg-slate-700 rounded-xl border border-slate-200 dark:border-slate-600 text-sm font-semibold text-slate-600 dark:text-slate-300">
+            {{ totalElements }} résultat(s) trouvé(s)
+          </span>
+        </div>
+      </div>
+      
+      <div class="overflow-x-auto">
+        <table class="min-w-full">
+          <thead class="bg-gradient-to-r from-slate-100 to-blue-50 dark:from-slate-700 dark:to-slate-600">
+            <tr>
+              <th scope="col" class="px-8 py-4 text-left text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                  </svg>
+                  Utilisateur
+                </div>
+              </th>
+              <th scope="col" class="px-8 py-4 text-left text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                  </svg>
+                  Adresse IP
+                </div>
+              </th>
+              <th scope="col" class="px-8 py-4 text-left text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  Date et Heure
+                </div>
+              </th>
+              <th scope="col" class="px-8 py-4 text-left text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  Statut
+                </div>
+              </th>
+              <th scope="col" class="px-8 py-4 text-left text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                  </svg>
+                  Navigateur
+                </div>
+              </th>
+              <th scope="col" class="px-8 py-4 text-left text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                  Action
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+            <tr *ngFor="let log of logs; trackBy: trackByLogId" class="hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-indigo-50/30 dark:hover:from-slate-700/50 dark:hover:to-slate-600/30 transition-all duration-200 group">
+              <td class="px-8 py-6">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0 h-12 w-12 flex items-center justify-center rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-600 group-hover:from-blue-100 group-hover:to-indigo-100 dark:group-hover:from-blue-800 dark:group-hover:to-indigo-800 transition-all duration-200 shadow-lg">
+                    <svg class="w-6 h-6 text-slate-600 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                  </div>
+                  <div class="ml-5">
+                    <div class="text-base font-bold text-slate-900 dark:text-white">{{ log.username }}</div>
+                  </div>
+                </div>
+              </td>
+              
+              <td class="px-8 py-6">
+                <code class="px-3 py-1.5 bg-slate-100 dark:bg-slate-700 rounded-lg text-sm font-mono font-medium text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-600">{{ maskIpAddress(log.ipAddress) }}</code>
+              </td>
+              
+              <td class="px-8 py-6">
+                <div class="text-base font-medium text-slate-900 dark:text-slate-200">{{ formatDate(log.loginTime) }}</div>
+              </td>
+              
+              <td class="px-8 py-6">
+                <span class="inline-flex items-center px-3 py-1.5 rounded-xl text-sm font-bold shadow-lg" [ngClass]="getStatusClass(log.status)">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path *ngIf="log.status === 'SUCCESS'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    <path *ngIf="log.status === 'FAILURE'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                  {{ getStatusText(log.status) }}
+                </span>
+              </td>
+              
+              <td class="px-8 py-6">
+                <span class="text-base text-slate-700 dark:text-slate-300 font-medium truncate max-w-xs block" [title]="log.userAgent">
+                  {{ (log.userAgent || 'Non spécifié') | slice:0:30 }}
+                  <span *ngIf="log.userAgent && log.userAgent.length > 30">...</span>
+                </span>
+              </td>
+              <td class="px-8 py-6 text-center">
+                <button (click)="logSuppression(log.id); deleteLog(log.id)" class="text-red-500 hover:text-red-700">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </td>
+            </tr>
+            
+            <!-- Empty State -->
+            <tr *ngIf="logs.length === 0">
+              <td colspan="5" class="px-8 py-20 text-center">
+                <div class="flex flex-col items-center justify-center">
+                  <div class="p-6 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-600 rounded-3xl shadow-xl mb-6">
+                    <svg class="w-16 h-16 text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2">Aucun log de connexion trouvé</h3>
+                  <p class="text-base text-slate-600 dark:text-slate-400">Essayez de modifier vos critères de recherche</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Pagination Section -->
+    <div *ngIf="!loading && totalPages > 1" class="mt-8 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 p-6">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div class="text-base font-medium text-slate-700 dark:text-slate-300">
+          Page <span class="font-bold text-slate-900 dark:text-white">{{ currentPage + 1 }}</span> sur <span class="font-bold text-slate-900 dark:text-white">{{ totalPages }}</span>
+          (<span class="font-semibold text-blue-600 dark:text-blue-400">{{ totalElements }}</span> éléments au total)
+        </div>
+        
+        <nav class="flex items-center gap-2">
+          <button 
+            (click)="previousPage()" 
+            [disabled]="currentPage === 0"
+            class="inline-flex items-center px-4 py-2.5 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 disabled:bg-slate-100 dark:disabled:bg-slate-800 text-slate-700 dark:text-slate-200 disabled:text-slate-400 dark:disabled:text-slate-500 font-semibold rounded-xl border border-slate-200 dark:border-slate-600 shadow-lg hover:shadow-xl disabled:shadow-sm transition-all duration-200 disabled:cursor-not-allowed transform hover:scale-105 disabled:transform-none"
+          >
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Précédent
+          </button>
+          
+          <div class="flex items-center gap-1">
+            <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
+              <button 
+                *ngIf="totalPages <= 7 || Math.abs(i - currentPage) <= 2 || i === 0 || i === totalPages - 1"
+                (click)="goToPage(i)"
+                [class.active]="i === currentPage"
+                class="w-10 h-10 flex items-center justify-center font-bold rounded-xl transition-all duration-200 transform hover:scale-110"
+                [ngClass]="i === currentPage ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-xl' : 'bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 shadow-lg hover:shadow-xl'"
+              >
+                {{ i + 1 }}
+              </button>
+              
+              <span 
+                *ngIf="totalPages > 7 && Math.abs(i - currentPage) === 3 && (i < currentPage)" 
+                class="px-3 py-2 text-slate-500 dark:text-slate-400 font-bold"
+              >
+                ...
+              </span>
+            </ng-container>
+          </div>
+          
+          <button 
+            (click)="nextPage()" 
+            [disabled]="currentPage === totalPages - 1"
+            class="inline-flex items-center px-4 py-2.5 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 disabled:bg-slate-100 dark:disabled:bg-slate-800 text-slate-700 dark:text-slate-200 disabled:text-slate-400 dark:disabled:text-slate-500 font-semibold rounded-xl border border-slate-200 dark:border-slate-600 shadow-lg hover:shadow-xl disabled:shadow-sm transition-all duration-200 disabled:cursor-not-allowed transform hover:scale-105 disabled:transform-none"
+          >
+            Suivant
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
